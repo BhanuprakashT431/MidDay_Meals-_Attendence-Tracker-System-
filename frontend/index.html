@@ -1,0 +1,2760 @@
+<!DOCTYPE html>
+<html lang="kn" class="h-full">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Akshara Dasoha" />
+  <meta name="application-name" content="Akshara Dasoha" />
+  <meta name="description"
+    content="Akshara Dasoha: Digital Mid-Day Meal and Student Attendance Management System for Karnataka Schools (PM-POSHAN)" />
+
+  <title>Akshara Dasoha - Karnataka PM-POSHAN Portal</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/manifest.json?v=20261018" />
+  <link rel="icon" type="image/png" href="/static/assets/logo.png?v=20261018" />
+  <link rel="apple-touch-icon" href="/static/assets/logo-192.png?v=20261018" />
+
+  <!-- Google Fonts: Noto Sans Kannada, Anek Kannada, Plus Jakarta Sans, Inter, Material Symbols Outlined -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    rel="stylesheet" />
+
+  <!-- React Native & Framer Motion Design System Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css?v=20261110d" />
+
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            // React Native-style Sky Blue brand palette
+            primary: {
+              DEFAULT: "#0284c7",
+              hover: "#0369a1",
+              light: "#38bdf8",
+              container: "#e0f2fe",
+              "on-container": "#0369a1",
+            },
+            secondary: {
+              DEFAULT: "#0284c7",
+              container: "#f0f9ff",
+              "on-container": "#0369a1",
+            },
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-surface": "#0c1f35",
+            "on-surface-variant": "#475569",
+            "outline-border": "rgba(14,165,233,0.15)",
+            "outline-border-accent": "rgba(14,165,233,0.25)",
+            error: "#f43f5e",
+            "error-container": "rgba(244,63,94,0.12)",
+            "on-error": "#ffffff",
+            "on-error-container": "#f43f5e",
+            surface: {
+              DEFAULT: "#f0f9ff",
+              dim: "#f1f5f9",
+              bright: "#ffffff",
+              container: "#ffffff",
+              "container-low": "#f8fafc",
+              "container-high": "#f1f5f9",
+              "container-lowest": "#ffffff",
+            },
+            "surface-container": "#f1f5f9",
+            "surface-container-low": "#f8fafc",
+            "surface-container-high": "#e2e8f0",
+            "surface-container-lowest": "#ffffff",
+            tertiary: "#f59e0b",
+            "tertiary-container": "rgba(245,158,11,0.15)",
+            "tertiary-fixed": "rgba(245,158,11,0.12)",
+            // Dark mode tokens
+            dark: {
+              bg: "#060d1a",
+              surface: "#0b1329",
+              card: "rgba(255,255,255,0.055)",
+              border: "rgba(125,211,252,0.15)",
+              accent: "#38bdf8",
+              accentGlow: "rgba(56,189,248,0.3)"
+            }
+          },
+          borderRadius: {
+            DEFAULT: "10px",
+            sm: "10px",
+            md: "16px",
+            lg: "20px",
+            xl: "24px",
+            "2xl": "28px",
+            full: "9999px"
+          },
+          spacing: {
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            margin: "1rem",
+            gutter: "1rem",
+            "space-lg": "1.5rem"
+          },
+          fontFamily: {
+            sans: ["'Noto Sans Kannada'", "'Anek Kannada'", "'Plus Jakarta Sans'", "Inter", "-apple-system", "sans-serif"],
+            kannada: ["'Noto Sans Kannada'", "'Anek Kannada'", "sans-serif"],
+            headline: ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            display: ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            body: ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            label: ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            "label-lg": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "headline-lg": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "headline-md": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "headline-sm": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "title-md": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "display-lg": ["'Noto Sans Kannada'", "'Plus Jakarta Sans'", "sans-serif"],
+            "body-lg": ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            "body-md": ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            "body-sm": ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            "label-md": ["'Noto Sans Kannada'", "Inter", "sans-serif"],
+            "label-sm": ["'Noto Sans Kannada'", "Inter", "sans-serif"]
+          },
+          boxShadow: {
+            'xs': '0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04)',
+            'sm': '0 2px 8px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05)',
+            'md': '0 4px 16px rgba(0,0,0,0.10),0 2px 8px rgba(0,0,0,0.06)',
+            'glow-sky': '0 4px 20px rgba(2,132,199,0.35),0 2px 8px rgba(2,132,199,0.20)',
+            'subtle-sky': '0 4px 20px -2px rgba(186,230,253,0.5),0 2px 6px -1px rgba(0,0,0,0.04)',
+            'glow-gold': '0 4px 18px rgba(245,158,11,0.35)',
+          },
+          transitionTimingFunction: {
+            'spring-bounce': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+            'spring-smooth': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            'spring-snappy': 'cubic-bezier(0.55, 0, 1, 0.45)',
+          },
+          keyframes: {
+            'rn-enter': {
+              'from': { opacity: '0', transform: 'scale(0.94) translateY(10px)' },
+              'to': { opacity: '1', transform: 'scale(1) translateY(0)' }
+            },
+            'rn-slide-up': {
+              'from': { opacity: '0', transform: 'translateY(28px)' },
+              'to': { opacity: '1', transform: 'translateY(0)' }
+            },
+            'rn-pulse-glow': {
+              '0%,100%': { boxShadow: '0 0 0 0 rgba(2,132,199,0.5)' },
+              '50%': { boxShadow: '0 0 0 8px rgba(2,132,199,0)' }
+            },
+            'rn-breathe': {
+              '0%,100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.04)' }
+            },
+            'tab-indicator': {
+              'from': { width: '0', opacity: '0' },
+              'to': { width: '28px', opacity: '1' }
+            }
+          },
+          animation: {
+            'rn-enter': 'rn-enter 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both',
+            'rn-slide-up': 'rn-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both',
+            'rn-pulse-glow': 'rn-pulse-glow 2s ease-in-out infinite',
+            'rn-breathe': 'rn-breathe 4s ease-in-out infinite',
+            'tab-indicator': 'tab-indicator 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @layer base {
+
+      html {
+        min-height: 100%;
+        scroll-behavior: smooth;
+        width: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      body {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background-color: #cbd5e1;
+        color: #0c1f35;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        font-family: 'Noto Sans Kannada', 'Anek Kannada', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Global Kannada Typography: Proper vertical line spacing so vowel signs and ottakshara never clip */
+      [lang="kn"],
+      .font-kannada,
+      p, span, h1, h2, h3, h4, h5, h6, label, button, input, select {
+        line-height: 1.55;
+      }
+
+      /* Standardized touch-friendly inputs for mobile phones */
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="tel"],
+      input[type="number"],
+      select {
+        min-height: 48px;
+        font-size: 14.5px;
+        line-height: 1.5;
+      }
+
+      /* Elegant, spacious mobile cards */
+      .rn-card,
+      .student-card,
+      .metric-card,
+      .action-card {
+        padding: 1rem 1.15rem;
+        border-radius: 1.25rem;
+        box-shadow: 0 2px 10px rgba(14, 165, 233, 0.07), 0 1px 3px rgba(0, 0, 0, 0.03);
+      }
+
+      .dark body {
+        background-color: #030712;
+        color: #e8f4fd;
+      }
+
+      @media (max-width: 639px) {
+        body {
+          background-color: #f0f9ff;
+        }
+
+        .dark body {
+          background-color: #060d1a;
+        }
+      }
+
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* React Native-style screen transition animation */
+    @keyframes screen-enter {
+      from {
+        opacity: 0;
+        transform: scale(0.97) translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Spring-press for all interactive elements */
+    button,
+    [role="button"] {
+      touch-action: manipulation;
+    }
+
+    /* Tab active indicator animation */
+    @keyframes tab-slide-in {
+      from {
+        transform: translateX(-50%) scaleX(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(-50%) scaleX(1);
+        opacity: 1;
+      }
+    }
+
+    /* Device frame wrapper for desktop viewing */
+    @media (min-width: 640px) {
+      .app-shell {
+        max-width: 440px;
+        margin: 0 auto;
+        box-shadow:
+          0 0 0 1px rgba(14, 165, 233, 0.15),
+          0 20px 60px -12px rgba(15, 23, 42, 0.22),
+          0 8px 24px -4px rgba(15, 23, 42, 0.12);
+        border-left: 1px solid rgba(14, 165, 233, 0.15);
+        border-right: 1px solid rgba(14, 165, 233, 0.15);
+        min-height: 100vh;
+        background-color: #ffffff;
+        border-radius: 0;
+      }
+
+      .dark .app-shell {
+        box-shadow:
+          0 0 0 1px rgba(125, 211, 252, 0.15),
+          0 25px 60px -12px rgba(0, 0, 0, 0.85);
+        border-left: 1px solid rgba(56, 189, 248, 0.15);
+        border-right: 1px solid rgba(56, 189, 248, 0.15);
+        background-color: #0b1329;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .app-shell {
+        width: 100%;
+        min-height: 100vh;
+        background-color: #ffffff;
+      }
+
+      .dark .app-shell {
+        background-color: #0b1329;
+      }
+    }
+
+    /* Enhanced view transition */
+    main[id^="view-"] {
+      animation: screen-enter 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* Tab button active state — top indicator pill */
+    .nav-tab-btn[data-active="true"]::before,
+    .nav-tab-btn.active::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 50%;
+      width: 24px;
+      height: 3px;
+      background: #0284c7;
+      border-radius: 9999px;
+      animation: tab-slide-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .dark .nav-tab-btn[data-active="true"]::before,
+    .dark .nav-tab-btn.active::before {
+      background: #38bdf8;
+    }
+
+    /* Premium card hover lift */
+    .rn-lift {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .rn-lift:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.18), 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Pressable scale-down */
+    .active\:scale-rn:active {
+      transform: scale(0.94) !important;
+    }
+
+    /* Gradient text utility */
+    .text-gradient-sky {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .dark .text-gradient-sky {
+      background: linear-gradient(135deg, #38bdf8, #7dd3fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    /* Breathing logo animation */
+    .animate-breathe {
+      animation: rn-breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes rn-breathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.04);
+      }
+    }
+
+    /* Karnataka Government Kannada Official Logo Subtle Watermark */
+    .karnataka-gov-watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(340px, 82vw);
+      height: min(340px, 82vw);
+      max-width: 400px;
+      max-height: 400px;
+      background-image: url('/static/assets/logo.png?v=20261018');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.058;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+      transition: opacity 0.3s ease, filter 0.3s ease;
+    }
+
+    .dark .karnataka-gov-watermark {
+      opacity: 0.045;
+      filter: brightness(1.25) drop-shadow(0 0 28px rgba(56, 189, 248, 0.22));
+    }
+  </style>
+</head>
+
+<body class="text-on-surface font-body-md select-none">
+  <!-- Mobile App Frame Container -->
+  <div class="app-shell bg-surface flex flex-col min-h-screen relative overflow-x-hidden">
+    <!-- Subtle Karnataka Government Kannada Logo Background Watermark -->
+    <div class="karnataka-gov-watermark" aria-hidden="true"></div>
+
+    <!-- ============================================================== -->
+    <!-- TOP FIXED APP HEADER (Active after login) -->
+    <!-- ============================================================== -->
+    <header id="app-header"
+      class="hidden fixed top-0 left-0 right-0 mx-auto w-full max-w-[440px] z-50 pt-safe bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-container">
+      <div class="h-16 px-3 sm:px-4 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
+          <img alt="Akshara Dasoha Emblem"
+            class="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-contain shrink-0 shadow-xs bg-white p-0.5 border border-sky-200/60 dark:border-sky-500/30"
+            src="/static/assets/logo.png?v=20261017" />
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="font-title-md text-xs sm:text-sm text-primary font-bold truncate leading-tight"
+              data-i18n="app_title">Smart-Nourish & Attend</span>
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="font-body-sm text-[10px] sm:text-[11px] text-on-surface-variant truncate max-w-[120px] sm:max-w-[160px]"
+                id="header-school-name" data-i18n="school_name_default">PM POSHAN Portal</span>
+              <span
+                class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded-full bg-secondary-container text-on-secondary-container text-[9px] font-bold leading-tight shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                <span id="header-network-text">Online</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Actions: Phone Access (PC only), Theme Toggle, Language Switcher, Settings, Sign Out -->
+        <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          <!-- Mobile Phone Access / QR Code button (hidden on mobile, visible on desktop) -->
+          <button id="headerPhoneBtn" type="button"
+            class="pc-only-btn w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-sky-100 hover:bg-sky-200 dark:bg-slate-800 items-center justify-center text-sky-700 dark:text-sky-300 active:scale-95 transition-all border border-sky-200 dark:border-sky-700/50 cursor-pointer"
+            title="Open on Mobile Phone (QR Code)" onclick="openPhoneAccessModal()">
+            <span class="material-symbols-outlined text-[16px] sm:text-[18px]">qr_code_scanner</span>
+          </button>
+
+          <!-- Light / Dark Theme Toggle Button -->
+          <button id="themeToggleBtn" type="button"
+            class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all"
+            title="Toggle Light / Dark Theme" onclick="toggleTheme()">
+            <span class="material-symbols-outlined text-[16px] sm:text-[18px]" id="header-theme-icon">light_mode</span>
+          </button>
+
+          <!-- Dynamic Language Toggle -->
+          <button id="langToggleBtn" type="button"
+            class="h-7 sm:h-8 flex items-center gap-1 px-2 sm:px-2.5 rounded-full bg-surface-container-high hover:bg-surface-container text-on-surface text-[11px] font-bold shadow-xs active:scale-95 transition-all shrink-0"
+            title="Toggle Kannada / English">
+            <span class="material-symbols-outlined text-[14px] text-primary">translate</span>
+            <span id="current-lang-text">ಕನ್ನಡ</span>
+          </button>
+
+          <!-- Settings modal button -->
+          <button id="openSettingsBtn" type="button"
+            class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all"
+            title="Cloud & Stitch Settings">
+            <span class="material-symbols-outlined text-[16px] sm:text-[18px]">settings</span>
+          </button>
+
+          <!-- User profile avatar / logout -->
+          <button id="logoutBtn" type="button"
+            class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs hover:bg-error-container hover:text-error active:scale-95 transition-all"
+            title="Sign Out">
+            <span class="material-symbols-outlined text-[16px] sm:text-[18px]">logout</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Offline / Connectivity Status Sub-bar -->
+      <div id="sub-status-bar"
+        class="w-full bg-secondary-container text-on-secondary-container px-3 sm:px-4 py-1 flex items-center justify-between text-[10px] sm:text-[11px] font-label-sm shadow-xs transition-colors gap-2">
+        <div class="flex items-center gap-1 min-w-0 flex-1">
+          <span class="material-symbols-outlined text-[13px] sm:text-[14px] text-secondary shrink-0"
+            id="sub-status-icon">cloud_done</span>
+          <span class="truncate" id="sub-status-text">NIC Gateway Connected • Belur Taluk, Hassan</span>
+        </div>
+        <button id="manualSyncBtn" type="button"
+          class="shrink-0 px-2 py-0.5 rounded-full bg-secondary text-on-secondary text-[9px] sm:text-[10px] font-bold active:scale-95 transition-all">
+          Sync Now
+        </button>
+      </div>
+    </header>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW 1: LOGIN & LANDING (Stitch Screen: Smart-Nourish Landing & Welcome) -->
+    <!-- ============================================================== -->
+    <main id="view-auth"
+      class="flex flex-col relative w-full min-h-screen bg-gradient-to-b from-[#f0f9ff] via-[#ffffff] to-[#f8fafc] dark:from-[#0b1329] dark:via-[#0f172a] dark:to-[#0b1329] text-[#0f172a] dark:text-[#e0e8f0] font-body transition-colors duration-300 overflow-x-hidden">
+
+      <!-- Official Karnataka Government Kannada Logo Background Watermark -->
+      <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
+        <img src="/static/assets/logo.png?v=20261018" alt="Karnataka Government Kannada Emblem"
+          class="w-[340px] max-w-[80vw] object-contain opacity-[0.06] dark:opacity-[0.045] select-none" />
+      </div>
+
+      <!-- Main Content Container with relative z-index -->
+      <div class="relative z-10 flex flex-col w-full">
+
+        <!-- Top Header Glassmorphic Bar -->
+        <div
+          class="flex flex-col w-full px-3 sm:px-4 pt-3 pb-3 bg-white/80 dark:bg-[#0b1329]/80 backdrop-blur-md border-b border-sky-100/80 dark:border-sky-900/30 shadow-xs">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              <div
+                class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl overflow-hidden shadow-subtle-sky shrink-0 bg-white dark:bg-slate-800 border border-sky-200/50 dark:border-sky-500/20 p-0.5">
+                <img alt="Akshara Dasoha Emblem" class="w-full h-full object-contain rounded-xl"
+                  src="/static/assets/logo.png?v=20261017" />
+              </div>
+              <div class="flex flex-col min-w-0 flex-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-ping"></span>
+                  <span class="text-[9px] sm:text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider truncate">PM POSHAN Mission</span>
+                </div>
+                <h1 class="text-sm sm:text-[15px] font-bold text-slate-900 dark:text-white truncate font-headline"
+                  data-i18n="app_title">Smart-Nourish & Attend</h1>
+              </div>
+            </div>
+
+            <!-- Controls: Phone QR (PC only), Theme Toggle & Language -->
+            <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              <!-- Phone Access QR Button (PC/Desktop only) -->
+              <button id="authPhoneBtn" aria-label="Open on Mobile Phone (QR Code)"
+                class="pc-only-btn min-h-[32px] h-8 px-2.5 py-1 rounded-full bg-sky-100 hover:bg-sky-200 dark:bg-slate-800 text-sky-800 dark:text-sky-300 text-xs font-bold items-center gap-1.5 border border-sky-300/80 dark:border-sky-500/30 active:scale-95 transition-all shadow-2xs cursor-pointer"
+                onclick="openPhoneAccessModal()" type="button" title="Open on Mobile Phone (Scan QR Code)">
+                <span class="material-symbols-outlined text-[17px] text-sky-600 dark:text-sky-400">qr_code_scanner</span>
+                <span class="font-bold">Phone QR</span>
+              </button>
+
+              <!-- Dark / Light Theme Toggle -->
+              <button aria-label="Toggle Dark Mode"
+                class="h-8 w-8 rounded-full bg-sky-50 dark:bg-slate-800/80 text-sky-700 dark:text-sky-300 flex items-center justify-center border border-sky-200/60 dark:border-sky-500/30 active:scale-95 transition-all shadow-2xs"
+                id="themeToggle" onclick="toggleTheme()" type="button" title="Toggle Theme">
+                <span class="material-symbols-outlined text-[17px]" id="auth-theme-icon">dark_mode</span>
+              </button>
+
+              <!-- Language Switcher -->
+              <button aria-label="Switch Language"
+                class="min-h-[32px] h-8 px-2.5 py-0.5 rounded-full bg-sky-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1 border border-sky-200/60 dark:border-sky-500/30 active:scale-95 transition-all shadow-2xs"
+                id="langToggle" onclick="window.i18n.toggleLanguage(); updateAuthLangBtns();" type="button"
+                title="Switch Language">
+                <span class="material-symbols-outlined text-[15px] text-sky-600 dark:text-sky-400">translate</span>
+                <span class="font-bold text-sky-700 dark:text-sky-300" id="currentLang">EN</span>
+                <span class="text-sky-300 dark:text-slate-600">|</span>
+                <span class="text-slate-500 dark:text-slate-400" id="langSubText">ಕನ್ನಡ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- NIC Sync Strip -->
+          <div
+            class="mt-2.5 pt-1.5 flex items-center justify-between bg-sky-50/70 dark:bg-slate-800/50 rounded-xl px-3 py-1.5 border border-sky-100 dark:border-sky-800/30">
+            <div class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 min-w-0">
+              <span class="material-symbols-outlined text-[15px] text-sky-600 dark:text-sky-400 shrink-0"
+                style='font-variation-settings: "FILL" 1;'>verified</span>
+              <span class="text-[11px] font-medium truncate" data-i18n="taluk_district">Ministry of Education,
+                GoI</span>
+            </div>
+            <div
+              class="flex items-center gap-1.5 bg-white dark:bg-slate-900/90 px-2 py-0.5 rounded-full shadow-2xs border border-sky-200/40 dark:border-sky-500/20 shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span class="text-[10px] text-slate-700 dark:text-slate-300 font-medium">NIC Cloud Sync</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Banner & Intro -->
+        <div class="flex flex-col px-4 pt-4 pb-2">
+          <div
+            class="inline-flex items-center self-start gap-1.5 px-3 py-0.5 rounded-full bg-sky-100/80 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-sky-800 dark:text-sky-300 mb-2.5 shadow-2xs">
+            <span class="material-symbols-outlined text-[14px] text-sky-600 dark:text-sky-400">school</span>
+            <span class="text-[11px] font-semibold" data-i18n="academic_cycle">Academic Cycle 2024–25 Active</span>
+          </div>
+          <h2
+            class="text-lg sm:text-[22px] font-extrabold text-slate-900 dark:text-white leading-snug tracking-tight font-headline break-words">
+            <span data-i18n="hero_headline_1">Nourishing Young Minds, Empowering</span> <span
+              class="bg-gradient-to-r from-sky-600 to-sky-500 dark:from-sky-400 dark:to-sky-200 bg-clip-text text-transparent"
+              data-i18n="hero_headline_2">Educators</span>
+          </h2>
+          <p class="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed break-words" data-i18n="hero_subtitle">
+            Unified digital attendance & Mid-Day Meal daily ration allocation for government primary & upper primary
+            schools nationwide.
+          </p>
+
+          <!-- Media Showcase Card -->
+          <div
+            class="relative mt-3.5 overflow-hidden rounded-2xl shadow-subtle-sky dark:shadow-none border border-sky-100 dark:border-sky-500/20 bg-slate-900">
+            <div class="w-full h-36 sm:h-40 bg-cover bg-center"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3wmAmh26OGrFyfVNX0X04vwUPUEdFNv7uv1MYuQxsksMn6zhVQota2-qT_gahLHzoaepX-GRZZmwN2Z6PlquPtvfUgMEED4fripulYlOUfYxxzOSuRIyvCagqqx2KpKMIStvN-Fxe7Uz5WgWhkbNVJAIB_xLa0A_NRESPT_c75CjRTgvVi1XqxPKSGFuhKr5dHOHr6QNq6T4vFbc7maH1ba5w_Mlgw_G8Ub0TNhMheTZHZ4shcq1e");'>
+            </div>
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent flex items-end p-3 sm:p-3.5">
+              <div class="flex items-center justify-between w-full text-white gap-2">
+                <div class="flex flex-col min-w-0">
+                  <span class="text-[9px] sm:text-[10px] uppercase tracking-wider text-sky-200 font-semibold truncate">Today's Daily Metric</span>
+                  <span class="text-sm sm:text-[15px] font-bold text-white font-headline truncate" data-i18n="daily_meals_logged">1,248,390 Meals Logged</span>
+                </div>
+                <span
+                  class="px-2 sm:px-2.5 py-1 rounded-lg bg-sky-500/90 dark:bg-sky-400/20 dark:text-sky-300 dark:border dark:border-sky-400/30 text-white text-[10px] sm:text-[11px] font-bold flex items-center gap-1 shadow-sm backdrop-blur-sm shrink-0">
+                  <span class="material-symbols-outlined text-[13px]">bolt</span> 99.4% Sync
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Metrics Grid -->
+        <div class="px-4 py-1.5">
+          <div
+            class="grid gap-2 sm:gap-2.5 grid-cols-2 p-1.5 bg-sky-50/70 dark:bg-slate-900/60 rounded-2xl border border-sky-100 dark:border-sky-800/30">
+            <div
+              class="flex flex-col items-center text-center p-2.5 sm:p-3 rounded-xl bg-white dark:bg-slate-800/90 shadow-2xs border border-sky-100/80 dark:border-sky-700/20 min-w-0">
+              <div
+                class="w-7 h-7 rounded-full bg-sky-50 dark:bg-sky-950/50 flex items-center justify-center mb-1 text-sky-600 dark:text-sky-400">
+                <span class="material-symbols-outlined text-[18px]">rice_bowl</span>
+              </div>
+              <span class="text-base sm:text-[18px] font-extrabold text-slate-900 dark:text-white font-headline truncate">1.2M+</span>
+              <span class="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">Meals / Day</span>
+            </div>
+            <div
+              class="flex flex-col items-center text-center p-2.5 sm:p-3 rounded-xl bg-white dark:bg-slate-800/90 shadow-2xs border border-sky-100/80 dark:border-sky-700/20 min-w-0">
+              <div
+                class="w-7 h-7 rounded-full bg-sky-50 dark:bg-sky-950/50 flex items-center justify-center mb-1 text-sky-600 dark:text-sky-400">
+                <span class="material-symbols-outlined text-[18px]">wifi_off</span>
+              </div>
+              <span class="text-base sm:text-[18px] font-extrabold text-slate-900 dark:text-white font-headline truncate">100%</span>
+              <span class="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">Offline Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Pillars for Educators -->
+        <div class="flex flex-col px-4 pt-3 pb-2">
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-[16px] font-bold text-slate-900 dark:text-white font-headline"
+              data-i18n="core_pillars_title">Core Pillars for Educators</h3>
+            <span
+              class="text-[10px] text-sky-600 dark:text-sky-400 uppercase font-bold tracking-wider bg-sky-100/80 dark:bg-sky-950 px-2 py-0.5 rounded-md border border-sky-200 dark:border-sky-800">Features</span>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <!-- Pillar 1 -->
+            <div
+              class="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-white/[0.04] dark:backdrop-blur-sm border border-sky-100 dark:border-sky-500/20 shadow-subtle-sky dark:shadow-none active:scale-[0.99] transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-sky-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <span class="material-symbols-outlined text-[22px]">how_to_reg</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h4 class="text-[14px] font-bold text-slate-900 dark:text-white font-headline"
+                    data-i18n="pillar_1_title">60-Second Roll Call</h4>
+                  <span
+                    class="px-1.5 py-0.2 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-[10px] font-bold border border-sky-200 dark:border-sky-700/50">Offline</span>
+                </div>
+                <p class="text-[12px] text-slate-600 dark:text-slate-300 mt-0.5 leading-normal"
+                  data-i18n="pillar_1_desc">
+                  Mark classes in seconds with smart auto-present toggles, cached class registers, and geo-stamped local
+                  logging.
+                </p>
+              </div>
+            </div>
+            <!-- Pillar 2 -->
+            <div
+              class="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-white/[0.04] dark:backdrop-blur-sm border border-sky-100 dark:border-sky-500/20 shadow-subtle-sky dark:shadow-none active:scale-[0.99] transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-sky-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <span class="material-symbols-outlined text-[22px]">calculate</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <h4 class="text-[14px] font-bold text-slate-900 dark:text-white font-headline"
+                  data-i18n="pillar_2_title">Automated MDM Ration Calculators</h4>
+                <p class="text-[12px] text-slate-600 dark:text-slate-300 mt-0.5 leading-normal"
+                  data-i18n="pillar_2_desc">
+                  Calculates exact daily rice, dal, and fortified oil measures instantly matching attendance rolls
+                  against sanctioned quota.
+                </p>
+              </div>
+            </div>
+            <!-- Pillar 3 -->
+            <div
+              class="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-white/[0.04] dark:backdrop-blur-sm border border-sky-100 dark:border-sky-500/20 shadow-subtle-sky dark:shadow-none active:scale-[0.99] transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <span class="material-symbols-outlined text-[22px]"
+                  style='font-variation-settings: "FILL" 1;'>security</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <h4 class="text-[14px] font-bold text-slate-900 dark:text-white font-headline"
+                  data-i18n="pillar_3_title">Leak-Proof Transparent Rations</h4>
+                <p class="text-[12px] text-slate-600 dark:text-slate-300 mt-0.5 leading-normal"
+                  data-i18n="pillar_3_desc">
+                  End-to-end reconciliation prevents stock discrepancies and issues automated alerts before food buffers
+                  drop.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SSO / Login Action Card (Direct 1:1 Stitch Layout) -->
+        <div class="px-4 py-3" id="login-section">
+          <div
+            class="rounded-2xl bg-white dark:bg-white/[0.04] dark:backdrop-blur-md p-5 shadow-subtle-sky dark:shadow-none border border-sky-100 dark:border-sky-500/20">
+            <div class="flex items-center gap-3 mb-2.5">
+              <div
+                class="w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 flex items-center justify-center shrink-0 border border-sky-200 dark:border-sky-700/50">
+                <span class="material-symbols-outlined text-[22px]">hub</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[16px] font-bold text-slate-900 dark:text-white font-headline"
+                  data-i18n="sso_title">Single Sign-On Access</span>
+                <span class="text-[12px] font-medium text-slate-500 dark:text-slate-400" data-i18n="sso_subtitle">UDISE+
+                  Linked Verification</span>
+              </div>
+            </div>
+            <p class="text-[13px] text-slate-600 dark:text-slate-300 mb-4 leading-relaxed" data-i18n="sso_desc">
+              Teachers, Headmasters, and Cluster Resource Coordinators (CRC) can access registers with registered mobile
+              OTP or UDISE PIN.
+            </p>
+            <div class="flex flex-col gap-2.5">
+              <!-- Primary Action Button: Sky Blue Pill -->
+              <button
+                class="min-h-[46px] h-auto w-full px-4 py-2.5 bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 dark:from-sky-400 dark:via-sky-300 dark:to-sky-400 text-white dark:text-slate-950 font-bold text-sm sm:text-[15px] rounded-full shadow-glow-sky flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:brightness-105 text-center leading-tight"
+                id="loginCta" onclick="openLoginModal()" type="button">
+                <span data-i18n="btn_login_portal">Login to Portal</span>
+                <span class="material-symbols-outlined text-[19px] shrink-0">login</span>
+              </button>
+              <!-- Secondary Action Button: Clean Outline Pill -->
+              <button
+                class="min-h-[46px] h-auto w-full px-4 py-2.5 bg-sky-50/70 hover:bg-sky-100/70 dark:bg-slate-800/80 dark:hover:bg-slate-800 text-sky-700 dark:text-sky-200 font-bold text-xs sm:text-[14px] rounded-full border border-sky-200 dark:border-sky-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight"
+                id="registerCta" onclick="openSchoolSetupModal()" type="button">
+                <span class="material-symbols-outlined text-[18px] text-sky-600 dark:text-sky-300 shrink-0">add_business</span>
+                <span data-i18n="btn_register_terminal">New School? Register Terminal</span>
+              </button>
+              <!-- Phone QR Access Button (Desktop/PC) -->
+              <button
+                class="pc-only-btn min-h-[46px] h-auto w-full px-4 py-2.5 bg-gradient-to-r from-sky-50 to-indigo-50 hover:from-sky-100 hover:to-indigo-100 dark:from-slate-800 dark:to-slate-800/80 text-sky-800 dark:text-sky-200 font-bold text-xs sm:text-[14px] rounded-full border border-sky-300 dark:border-sky-500/30 items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight shadow-xs cursor-pointer"
+                onclick="openPhoneAccessModal()" type="button">
+                <span class="material-symbols-outlined text-[19px] text-sky-600 dark:text-sky-400 shrink-0">qr_code_scanner</span>
+                <span>Open on Phone via QR Code</span>
+              </button>
+              <!-- Tertiary Action -->
+              <button
+                class="min-h-[40px] h-auto w-full py-2 text-sky-600 dark:text-sky-300 font-semibold text-xs sm:text-[13px] flex items-center justify-center gap-1.5 active:opacity-75 transition-opacity text-center leading-tight"
+                id="demoCta" onclick="loginGuestDemo()" type="button">
+                <span class="material-symbols-outlined text-[17px] shrink-0">play_circle</span>
+                <span data-i18n="btn_guest_demo">Explore Guest Demo Mode</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust, Security & Helpline Footer -->
+        <div class="px-4 pt-1 pb-8">
+          <div
+            class="rounded-2xl bg-sky-50/80 dark:bg-slate-900/60 p-4 flex flex-col gap-3 border border-sky-100 dark:border-sky-800/40">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-[18px] text-sky-600 dark:text-sky-400"
+                  style='font-variation-settings: "FILL" 1;'>lock</span>
+                <span class="text-[12px] font-bold">256-Bit AES Encrypted</span>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-semibold border border-sky-100 dark:border-sky-700/30">NIC
+                Certified</span>
+            </div>
+
+            <!-- Helpline Card -->
+            <div
+              class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100/80 dark:border-sky-700/30 shadow-2xs">
+              <div
+                class="w-9 h-9 rounded-full bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-300 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[19px]">support_agent</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium"
+                  data-i18n="national_helpline">National Shiksha Helpline</span>
+                <a class="text-[15px] font-extrabold text-sky-600 dark:text-sky-400 tracking-wide font-headline"
+                  href="tel:18001802020">1800-180-2020</a>
+              </div>
+            </div>
+
+            <div
+              class="flex items-center justify-between text-slate-500 dark:text-slate-400 pt-0.5 text-[10px] font-medium">
+              <span>Smart-Nourish Mobile v3.4.2</span>
+              <span class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                Digital India
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW 2: TEACHER / HM DASHBOARD (Stitch Screen 2) -->
+    <!-- ============================================================== -->
+    <main id="view-dashboard" class="hidden flex flex-col relative w-full pt-20 pb-24 bg-transparent min-h-screen">
+      <div class="flex flex-col w-full px-margin gap-space-md py-space-md">
+
+        <!-- Teacher Greeting Banner -->
+        <div
+          class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-md shadow-sm border border-surface-container">
+          <div class="flex flex-col gap-space-xs relative z-10">
+            <div class="flex items-center justify-between">
+              <span
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                <span id="dash-date-badge">Today: 24 Oct 2026</span>
+              </span>
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                <span data-i18n="roll_call_open">Roll-Call Open</span>
+              </span>
+            </div>
+            <div class="mt-1 min-w-0">
+              <h1 class="font-headline-md text-base sm:text-headline-md text-on-surface font-bold truncate" id="dash-greeting-name">Namaste</h1>
+              <p class="font-body-md text-xs sm:text-sm text-primary font-semibold truncate" id="dash-role-badge">School Staff Portal</p>
+            </div>
+            <div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-[11px] sm:text-xs min-w-0">
+              <span class="material-symbols-outlined text-[15px] sm:text-[16px] text-on-surface-variant shrink-0">school</span>
+              <span class="truncate flex-1 min-w-0" id="dash-school-name" data-i18n="school_name_default">PM POSHAN Portal</span>
+              <span
+                class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant text-[10px] font-mono font-semibold shrink-0"
+                id="dash-dise-badge">DISE: --</span>
+            </div>
+          </div>
+          <!-- Decorative Nutrition Watermark -->
+          <div class="absolute -right-4 -bottom-6 opacity-10 pointer-events-none text-primary">
+            <span class="material-symbols-outlined text-[120px]">nutrition</span>
+          </div>
+        </div>
+
+        <!-- Today's Prescribed Meal Menu Banner -->
+        <div
+          class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container flex flex-col gap-space-sm relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[20px]"
+                  style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-title-md text-title-md text-on-surface font-bold" data-i18n="menu_today_title">Today's
+                  Prescribed MDM Menu</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">Karnataka PM POSHAN / ಅಕ್ಷರ ದಾಸೋಹ</span>
+              </div>
+            </div>
+            <span
+              class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-xs font-bold"
+              data-i18n="menu_tuesday">Tuesday</span>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-1 border border-surface-container">
+            <div class="flex items-center gap-1.5 text-primary font-bold font-label-lg">
+              <span class="material-symbols-outlined text-[18px]">lunch_dining</span>
+              <span id="menu-dish-name">Steamed Rice, Sambar with Fresh Vegetables & (Boiled Egg / Banana)</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant" id="menu-dish-kannada">ಬಿಸಿ ಅನ್ನ, ಸೊಪ್ಪು ತರಕಾರಿ
+              ಸಾಂಬಾರ್ ಮತ್ತು (ಬೇಯಿಸಿದ ಮೊಟ್ಟೆ / ಬಾಳೆಹಣ್ಣು )(ಕ್ಷೀರಭಾಗ್ಯ ಹಾಲು)</p>
+          </div>
+        </div>
+
+        <!-- Quick Metrics Grid (React Native Elevated Cards with Hover Lift) -->
+        <div class="grid grid-cols-2 gap-2.5 sm:gap-3 rn-stagger">
+          <!-- Total Enrolled -->
+          <div
+            class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container shadow-xs flex flex-col rn-lift rn-card min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-label-sm text-[10px] sm:text-xs text-on-surface-variant uppercase font-semibold truncate flex-1 min-w-0"
+                data-i18n="dash_total_enrolled">Enrolled</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-xs shrink-0">
+                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">groups</span>
+              </span>
+            </div>
+            <span class="font-headline-lg text-xl sm:text-2xl font-bold text-on-surface mt-1 truncate"
+              id="dash-stat-enrolled">145</span>
+            <span class="font-body-sm text-[10px] sm:text-[11px] text-on-surface-variant truncate">Classes 8, 9 & 10</span>
+          </div>
+
+          <!-- Attendance Rate -->
+          <div
+            class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container shadow-xs flex flex-col rn-lift rn-card min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-label-sm text-[10px] sm:text-xs text-on-surface-variant uppercase font-semibold truncate flex-1 min-w-0"
+                data-i18n="dash_today_present">Present</span>
+              <span
+                class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-secondary-container text-secondary flex items-center justify-center shadow-xs shrink-0">
+                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">fact_check</span>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-1.5 mt-1 min-w-0 overflow-hidden">
+              <span class="font-headline-lg text-xl sm:text-2xl font-bold text-secondary truncate" id="dash-stat-present">138</span>
+              <span class="font-label-md text-[11px] sm:text-xs text-secondary font-bold shrink-0" id="dash-stat-rate">95.2%</span>
+            </div>
+            <span class="font-body-sm text-[10px] sm:text-[11px] text-on-surface-variant truncate" id="dash-stat-absent">7 Absent Today</span>
+          </div>
+
+          <!-- Meals Served -->
+          <div
+            class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container shadow-xs flex flex-col rn-lift rn-card min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-label-sm text-[10px] sm:text-xs text-on-surface-variant uppercase font-semibold truncate flex-1 min-w-0"
+                data-i18n="dash_meals_served">Meals Served</span>
+              <span
+                class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-tertiary-fixed text-tertiary flex items-center justify-center shadow-xs shrink-0">
+                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">soup_kitchen</span>
+              </span>
+            </div>
+            <span class="font-headline-lg text-xl sm:text-2xl font-bold text-tertiary mt-1 truncate" id="dash-stat-meals">138</span>
+            <span class="font-body-sm text-[10px] sm:text-[11px] text-on-surface-variant truncate">100% attendance served</span>
+          </div>
+
+          <!-- Grain Stock Health -->
+          <div
+            class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container shadow-xs flex flex-col rn-lift rn-card min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-label-sm text-[10px] sm:text-xs text-on-surface-variant uppercase font-semibold truncate flex-1 min-w-0"
+                data-i18n="rice_stock">Rice Stock</span>
+              <span
+                class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shadow-xs shrink-0">
+                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">inventory_2</span>
+              </span>
+            </div>
+            <span class="font-headline-lg text-xl sm:text-2xl font-bold text-on-surface mt-1 truncate" id="dash-stat-rice">145
+              kg</span>
+            <span class="font-body-sm text-[10px] sm:text-[11px] text-secondary font-semibold truncate" id="dash-stat-days">~10 days
+              buffer</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions Navigation Cards -->
+        <div class="flex flex-col gap-2">
+          <span class="font-label-md text-xs sm:text-sm text-on-surface-variant font-bold px-1"
+            data-i18n="dash_quick_actions">Quick Operations</span>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button
+              class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-br from-primary to-primary-hover text-on-primary flex flex-col gap-1 shadow-md shadow-primary/20 pressable active:scale-rn rn-lift transition-all text-left min-w-0 overflow-hidden"
+              onclick="app.navigateTo('attendance')" type="button">
+              <span class="material-symbols-outlined text-[22px] sm:text-[24px]">checklist</span>
+              <span class="font-label-lg text-xs sm:text-sm font-bold leading-snug break-words" data-i18n="action_mark_attendance">Take Roll-Call</span>
+              <span class="text-[10px] sm:text-[11px] opacity-85 leading-tight truncate">Class 8, 9, 10 register</span>
+            </button>
+
+            <button
+              class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container text-on-surface flex flex-col gap-1 shadow-xs hover:border-primary pressable active:scale-rn rn-lift transition-all text-left min-w-0 overflow-hidden"
+              onclick="app.navigateTo('meals')" type="button">
+              <span class="material-symbols-outlined text-[22px] sm:text-[24px] text-primary">restaurant</span>
+              <span class="font-label-lg text-xs sm:text-sm font-bold leading-snug break-words" data-i18n="action_log_meal">Log Today's Meal</span>
+              <span class="text-[10px] sm:text-[11px] text-on-surface-variant leading-tight truncate">Auto-deduct rations</span>
+            </button>
+
+            <button
+              class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container text-on-surface flex flex-col gap-1 shadow-xs hover:border-primary pressable active:scale-rn rn-lift transition-all text-left min-w-0 overflow-hidden"
+              onclick="openProduceModal()" type="button">
+              <span class="material-symbols-outlined text-[22px] sm:text-[24px] text-tertiary">local_shipping</span>
+              <span class="font-label-lg text-xs sm:text-sm font-bold leading-snug break-words" data-i18n="action_add_stock">Fresh Produce</span>
+              <span class="text-[10px] sm:text-[11px] text-on-surface-variant leading-tight truncate">Vegetables inward</span>
+            </button>
+
+            <button
+              class="p-3 sm:p-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container text-on-surface flex flex-col gap-1 shadow-xs hover:border-primary pressable active:scale-rn rn-lift transition-all text-left min-w-0 overflow-hidden"
+              onclick="app.navigateTo('reports')" type="button">
+              <span class="material-symbols-outlined text-[22px] sm:text-[24px] text-secondary">description</span>
+              <span class="font-label-lg text-xs sm:text-sm font-bold leading-snug break-words" data-i18n="action_view_reports">Monthly Reports</span>
+              <span class="text-[10px] sm:text-[11px] text-on-surface-variant leading-tight truncate">Compliance & audit</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Low Stock Alert Banner (Dynamic) -->
+        <div id="dash-low-stock-box"
+          class="p-3.5 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed flex items-start gap-3 shadow-xs">
+          <span class="material-symbols-outlined text-tertiary text-[22px] shrink-0 mt-0.5">warning</span>
+          <div class="flex flex-col">
+            <span class="font-label-md font-bold" data-i18n="buffer_stock_warning">Buffer Stock Alert: Cooking
+              Oil</span>
+            <span class="font-body-sm text-xs mt-0.5" id="dash-stock-warning-text">Remaining Cooking Oil is 22.0 L.
+              Place indent with Belur Taluk Food Inspector for next week's quota.</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW 3: DAILY STUDENT ATTENDANCE (Stitch Screen 3) -->
+    <!-- ============================================================== -->
+    <main id="view-attendance" class="hidden flex flex-col relative w-full pt-20 pb-32 bg-transparent min-h-screen">
+      <div class="flex flex-col w-full pb-6">
+
+        <!-- Class Selector & Date Ribbon -->
+        <div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-sm">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-space-xs">
+                <span
+                  class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm font-bold"
+                  id="att-class-badge">--</span>
+                <h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight"
+                  id="att-class-title">Class Attendance</h2>
+              </div>
+              <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" id="att-school-subtitle">PM-POSHAN
+                Attendance Register</span>
+            </div>
+
+            <!-- Class Picker Dropdown / Pill Switcher -->
+            <select id="att-class-select"
+              class="px-3 py-1.5 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold border-none focus:ring-2 focus:ring-primary shadow-xs"
+              onchange="switchAttendanceClass(this.value)">
+              <option value="">Select Class</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Live Attendance Metric Header -->
+          <div class="grid grid-cols-4 gap-1.5 sm:gap-2 mt-1">
+            <div
+              class="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-surface-container-low text-on-surface shadow-xs min-w-0 overflow-hidden">
+              <span class="font-headline-md text-base sm:text-lg font-bold text-on-surface truncate" id="att-count-total">0</span>
+              <span class="font-label-sm text-[9px] sm:text-[10px] text-on-surface-variant uppercase font-bold text-center leading-tight truncate w-full"
+                data-i18n="total_enrolled">Total</span>
+            </div>
+            <div
+              class="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-primary-container/15 text-primary shadow-xs min-w-0 overflow-hidden">
+              <span class="font-headline-md text-base sm:text-lg font-bold text-primary truncate" id="att-count-present">0</span>
+              <span class="font-label-sm text-[9px] sm:text-[10px] uppercase font-bold text-center leading-tight truncate w-full"
+                data-i18n="present">Present</span>
+            </div>
+            <div
+              class="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-error-container/40 text-error shadow-xs min-w-0 overflow-hidden">
+              <span class="font-headline-md text-base sm:text-lg font-bold text-error truncate" id="att-count-absent">0</span>
+              <span class="font-label-sm text-[9px] sm:text-[10px] uppercase font-bold text-center leading-tight truncate w-full"
+                data-i18n="absent">Absent</span>
+            </div>
+            <div
+              class="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-secondary-container/40 text-secondary shadow-xs min-w-0 overflow-hidden">
+              <span class="font-headline-md text-base sm:text-lg font-bold text-secondary truncate" id="att-count-rate">0%</span>
+              <span class="font-label-sm text-[9px] sm:text-[10px] uppercase font-bold text-center leading-tight truncate w-full" data-i18n="rate">Rate</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search & Filter Bar + Batch Action -->
+        <div class="px-margin py-space-xs flex flex-col gap-2">
+          <div class="relative flex items-center w-full">
+            <span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span>
+            <input
+              class="w-full h-10 pl-9 pr-4 rounded-xl bg-surface-container text-on-surface placeholder:text-on-surface-variant/70 text-xs sm:text-sm font-body-md focus:outline-none focus:bg-surface-container-highest transition-all shadow-xs"
+              id="att-search-input" oninput="filterStudentRoster(this.value)"
+              placeholder="Search student name or Roll No..." type="text" />
+          </div>
+
+          <div class="flex items-center justify-between gap-1.5 flex-wrap sm:flex-nowrap py-0.5">
+            <div class="flex items-center gap-1">
+              <button
+                class="att-filter-chip px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-[11px] font-bold shadow-xs active:scale-95 transition-all"
+                onclick="setAttendanceFilter('all', this)" type="button" id="att-filter-all">All</button>
+              <button
+                class="att-filter-chip px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-[11px] font-bold active:scale-95 transition-all"
+                onclick="setAttendanceFilter('present', this)" type="button">Present</button>
+              <button
+                class="att-filter-chip px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-[11px] font-bold active:scale-95 transition-all"
+                onclick="setAttendanceFilter('absent', this)" type="button">Absent</button>
+            </div>
+            <div class="flex items-center gap-1 shrink-0 ml-auto">
+              <button
+                class="px-2.5 py-1 rounded-lg bg-surface-container-highest text-primary font-label-sm text-[11px] font-bold hover:bg-primary hover:text-on-primary active:scale-95 transition-all"
+                onclick="openAddStudentModal()" type="button">
+                + Add Student
+              </button>
+              <button
+                class="px-2.5 py-1 rounded-lg bg-surface-container-highest text-primary font-label-sm text-[11px] font-bold hover:bg-primary hover:text-on-primary active:scale-95 transition-all"
+                onclick="markAllStudents(true)" type="button" data-i18n="mark_all_present">
+                Mark All Present
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Attendance Roster Cards Container -->
+        <div class="px-margin pt-space-xs flex flex-col gap-2.5" id="students-container">
+          <!-- Dynamically populated student cards -->
+        </div>
+
+        <!-- Mid-Day Meal Impact Preview Notice Card -->
+        <div class="px-margin mt-space-md">
+          <div class="p-3.5 rounded-2xl bg-surface-container flex items-center gap-3 shadow-xs">
+            <div
+              class="w-10 h-10 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[22px]">nutrition</span>
+            </div>
+            <div class="flex flex-col min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="font-title-md text-title-md text-on-surface font-bold" data-i18n="mdm_auto_calc">MDM Ration
+                  Auto-Estimate</span>
+                <span
+                  class="px-1.5 py-0.2 rounded-full bg-secondary text-on-secondary font-label-sm text-[9px] font-bold">Auto-Norm</span>
+              </div>
+              <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" id="att-ration-estimate">
+                45 present = ~6.75 kg Rice (150g) & 1.35 kg Dal (30g) for lunch.
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Confirmation / Submit Action Drawer -->
+      <div
+        class="fixed bottom-16 left-0 right-0 max-w-[440px] mx-auto z-40 px-margin py-2.5 bg-surface/90 backdrop-blur-md shadow-[0_-4px_12px_rgba(15,23,42,0.08)] border-t border-surface-container">
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold" id="att-summary-title">Class
+                Summary:</span>
+            </div>
+            <span class="font-label-lg text-label-lg font-bold text-primary" id="att-summary-count">45 Present / 48
+              Total</span>
+          </div>
+          <button
+            class="w-full min-h-[46px] h-auto py-2.5 px-3 rounded-xl bg-primary text-on-primary text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:bg-primary-container active:scale-[0.985] transition-all text-center leading-tight"
+            id="submit-register-btn" onclick="submitAttendanceRegister()" type="button">
+            <span class="material-symbols-outlined text-[19px] shrink-0"
+              style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+            <span id="submit-att-text" data-i18n="submit_att_server">Submit Attendance to Server</span>
+          </button>
+          <div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
+            <span class="material-symbols-outlined text-[13px]">lock</span>
+            <span class="font-label-sm text-label-sm text-[11px]">Geo-fenced verification active • GPS Accuracy:
+              4m</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW 4: MDM MEAL & RATION INVENTORY (Stitch Screen 4) -->
+    <!-- ============================================================== -->
+    <main id="view-meals" class="hidden flex flex-col relative w-full pt-20 pb-32 bg-transparent min-h-screen">
+      <div class="flex flex-col w-full pb-6 px-margin gap-space-md py-space-md">
+
+        <!-- Header Card: Overview & Beneficiaries -->
+        <div
+          class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container">
+          <div class="flex flex-col gap-space-xs relative z-10">
+            <div class="flex items-center justify-between">
+              <span
+                class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-[14px] text-primary">calendar_today</span>
+                <span id="meal-date-label">Today's Meal Log</span>
+              </span>
+              <span
+                class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-semibold"
+                data-i18n="karnataka_norms">Karnataka Poshan Norms</span>
+            </div>
+            <h1 class="font-headline-md text-headline-md text-on-surface mt-1" data-i18n="mdm_daily_log_title">MDM Daily
+              Consumption Log</h1>
+
+            <div class="mt-2 p-space-sm rounded-lg bg-surface-container-low border border-primary/20">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-space-sm">
+                  <div
+                    class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-label-sm text-label-sm text-on-surface-variant font-medium"
+                        data-i18n="total_beneficiaries">Total Meal Beneficiaries (Today)</span>
+                      <span
+                        class="px-1.5 py-0.2 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px] font-bold">From
+                        Attendance</span>
+                    </div>
+                    <span class="font-headline-sm text-headline-sm text-primary font-bold"
+                      id="meal-beneficiary-count">138 Students Present</span>
+                  </div>
+                </div>
+                <div class="text-right shrink-0">
+                  <span
+                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+                    <span class="material-symbols-outlined text-[13px]">check_circle</span>Auto-filled
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kitchen Inspection & Mandatory Quality Safety Gate -->
+        <div
+          class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-primary text-[20px]"
+              style="font-variation-settings: 'FILL' 1;">verified</span>
+            <h2 class="font-title-md text-title-md text-on-surface" data-i18n="quality_gate_title">Mandatory Quality &
+              Safety Gate</h2>
+          </div>
+
+          <!-- Checkbox 1: Taste & Quality -->
+          <label
+            class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low cursor-pointer active:scale-[0.99] transition-transform">
+            <input checked id="tasteCheck" type="checkbox"
+              class="mt-1 w-5 h-5 accent-primary rounded cursor-pointer shrink-0" />
+            <div class="flex flex-col min-w-0">
+              <span class="font-label-lg text-label-lg text-on-surface font-semibold" data-i18n="taste_verified">Food
+                Quality & Taste Verified</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" data-i18n="taste_time">Tasted prior
+                to serving students at 12:15 PM</span>
+              <div class="inline-flex items-center gap-1 mt-1 text-label-sm text-primary font-semibold">
+                <span class="material-symbols-outlined text-[14px]">person</span>
+                <span id="tasted-by-text">Inspected by: Designated Staff / HM</span>
+              </div>
+            </div>
+          </label>
+
+          <!-- Checkbox 2: Hygiene & Clean Water -->
+          <label
+            class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low cursor-pointer active:scale-[0.99] transition-transform">
+            <input checked id="hygieneCheck" type="checkbox"
+              class="mt-1 w-5 h-5 accent-primary rounded cursor-pointer shrink-0" />
+            <div class="flex flex-col min-w-0">
+              <span class="font-label-lg text-label-lg text-on-surface font-semibold" data-i18n="hygiene_verified">Clean
+                Water & Kitchen Hygiene Maintained</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" data-i18n="hygiene_details">Cooking
+                vessels sanitized; chlorination check passed</span>
+              <span class="font-label-sm text-label-sm text-secondary font-semibold mt-0.5">Verified by Nodal
+                Teacher</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Ration Consumption Entry Section with Tactile Steppers -->
+        <div class="flex flex-col gap-space-sm">
+          <div class="flex items-center justify-between px-space-xs">
+            <div class="flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-tertiary-container text-[20px]">inventory_2</span>
+              <h2 class="font-title-md text-title-md text-on-surface" data-i18n="daily_ration_title">Daily Ration
+                Consumption</h2>
+            </div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Standard PM-POSHAN Norms</span>
+          </div>
+
+          <!-- Rice -->
+          <div
+            class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-label-lg text-xs sm:text-sm text-on-surface font-bold" data-i18n="item_rice">Rice (FCI /
+                    Grade A)</span>
+                  <span
+                    class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface text-[10px] font-bold shrink-0">150g/child</span>
+                </div>
+                <span class="font-body-sm text-[11px] sm:text-xs text-on-surface-variant mt-0.5">Remaining Stock: <strong
+                    class="text-on-surface" id="stock-rice-val">145.00 kg</strong></span>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold shrink-0">In
+                Stock</span>
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-sm text-[10px] sm:text-[11px] text-on-surface-variant leading-tight" data-i18n="calculated_norm">Calculated
+                  Norm</span>
+                <span class="font-title-md text-sm sm:text-base text-primary font-bold" id="norm-rice-text">20.70 kg</span>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 bg-surface-container-low rounded-xl p-1 shrink-0 ml-auto">
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-rice-input', -0.5)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="flex items-baseline px-1">
+                  <input
+                    class="w-12 sm:w-14 text-center font-bold text-sm sm:text-base bg-transparent text-on-surface focus:outline-none"
+                    id="meal-rice-input" step="0.1" type="number" value="0.00" />
+                  <span class="font-label-sm text-xs text-on-surface-variant ml-0.5">kg</span>
+                </div>
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-rice-input', 0.5)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pulses / Toor Dal -->
+          <div
+            class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-label-lg text-xs sm:text-sm text-on-surface font-bold" data-i18n="item_dal">Pulses / Tur
+                    Dal</span>
+                  <span
+                    class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface text-[10px] font-bold shrink-0">30g/child</span>
+                </div>
+                <span class="font-body-sm text-[11px] sm:text-xs text-on-surface-variant mt-0.5">Remaining Stock: <strong
+                    class="text-on-surface" id="stock-dal-val">48.50 kg</strong></span>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold shrink-0">Buffer
+                Good</span>
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-sm text-[10px] sm:text-[11px] text-on-surface-variant leading-tight" data-i18n="calculated_norm">Calculated
+                  Norm</span>
+                <span class="font-title-md text-sm sm:text-base text-primary font-bold" id="norm-dal-text">0.00 kg</span>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 bg-surface-container-low rounded-xl p-1 shrink-0 ml-auto">
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-dal-input', -0.1)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="flex items-baseline px-1">
+                  <input
+                    class="w-12 sm:w-14 text-center font-bold text-sm sm:text-base bg-transparent text-on-surface focus:outline-none"
+                    id="meal-dal-input" step="0.1" type="number" value="0.00" />
+                  <span class="font-label-sm text-xs text-on-surface-variant ml-0.5">kg</span>
+                </div>
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-dal-input', 0.1)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cooking Oil -->
+          <div
+            class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-label-lg text-xs sm:text-sm text-on-surface font-bold" data-i18n="item_oil">Cooking Oil
+                    (Fortified)</span>
+                  <span
+                    class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface text-[10px] font-bold shrink-0">7.5g/child</span>
+                </div>
+                <span class="font-body-sm text-[11px] sm:text-xs text-on-surface-variant mt-0.5">Stock: <strong
+                    class="text-on-surface" id="stock-oil-val">22.00 L</strong></span>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold shrink-0">In
+                Stock</span>
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-sm text-[10px] sm:text-[11px] text-on-surface-variant leading-tight" data-i18n="calculated_norm">Calculated
+                  Norm</span>
+                <span class="font-title-md text-sm sm:text-base text-primary font-bold" id="norm-oil-text">0.00 L</span>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 bg-surface-container-low rounded-xl p-1 shrink-0 ml-auto">
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-oil-input', -0.05)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="flex items-baseline px-1">
+                  <input
+                    class="w-12 sm:w-14 text-center font-bold text-sm sm:text-base bg-transparent text-on-surface focus:outline-none"
+                    id="meal-oil-input" step="0.05" type="number" value="0.00" />
+                  <span class="font-label-sm text-xs text-on-surface-variant ml-0.5">L</span>
+                </div>
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-oil-input', 0.05)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fresh Produce / Vegetables -->
+          <div
+            class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-label-lg text-xs sm:text-sm text-on-surface font-bold" data-i18n="item_veg">Fresh
+                    Vegetables</span>
+                  <span
+                    class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface text-[10px] font-bold shrink-0">75g/child</span>
+                </div>
+                <span class="font-body-sm text-[11px] sm:text-xs text-on-surface-variant mt-0.5">Tomatoes, Greens, Potato • Fresh
+                  Market</span>
+              </div>
+              <button type="button"
+                class="px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-xs font-bold hover:bg-tertiary-container/50 active:scale-95 transition-all shrink-0"
+                onclick="openProduceModal()">
+                + Inward Log
+              </button>
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-sm text-[10px] sm:text-[11px] text-on-surface-variant leading-tight" data-i18n="calculated_norm">Calculated
+                  Norm</span>
+                <span class="font-title-md text-sm sm:text-base text-primary font-bold" id="norm-veg-text">0.00 kg</span>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 bg-surface-container-low rounded-xl p-1 shrink-0 ml-auto">
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-veg-input', -0.5)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="flex items-baseline px-1">
+                  <input
+                    class="w-12 sm:w-14 text-center font-bold text-sm sm:text-base bg-transparent text-on-surface focus:outline-none"
+                    id="meal-veg-input" step="0.5" type="number" value="0.00" />
+                  <span class="font-label-sm text-xs text-on-surface-variant ml-0.5">kg</span>
+                </div>
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-veg-input', 0.5)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seasonal Fruits / Eggs Distribution -->
+          <div
+            class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container min-w-0 overflow-hidden">
+            <div class="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-label-lg text-xs sm:text-sm text-on-surface font-bold" data-i18n="item_eggs">Boiled Eggs
+                    / Bananas / Chikki</span>
+                  <span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface text-[10px] font-bold shrink-0">1
+                    pc/child</span>
+                </div>
+                <span class="font-body-sm text-[11px] sm:text-xs text-on-surface-variant mt-0.5">Supplementary Nutrition
+                  Allocation</span>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold shrink-0">Distributed</span>
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-2 flex-wrap sm:flex-nowrap">
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-sm text-[10px] sm:text-[11px] text-on-surface-variant leading-tight" data-i18n="required_count">Required
+                  Count</span>
+                <span class="font-title-md text-sm sm:text-base text-primary font-bold" id="norm-fruit-text">0 pcs</span>
+              </div>
+              <div class="flex items-center gap-1.5 sm:gap-2 bg-surface-container-low rounded-xl p-1 shrink-0 ml-auto">
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-surface-container-lowest text-on-surface flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-fruit-input', -1)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <div class="flex items-baseline px-1">
+                  <input
+                    class="w-12 sm:w-14 text-center font-bold text-sm sm:text-base bg-transparent text-on-surface focus:outline-none"
+                    id="meal-fruit-input" step="1" type="number" value="0" />
+                  <span class="font-label-sm text-xs text-on-surface-variant ml-0.5">pcs</span>
+                </div>
+                <button
+                  class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shadow-xs active:scale-95 transition-transform"
+                  onclick="adjustInputVal('meal-fruit-input', 1)" type="button">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Geotagged Plate Verification Card -->
+        <div
+          class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-primary text-[20px]">photo_camera</span>
+              <h2 class="font-title-md text-title-md text-on-surface" data-i18n="geotag_plate">Geotagged Plate Verification</h2>
+            </div>
+            <!-- Dynamic GPS Calibration Status Badge -->
+            <span id="gps-status-badge"
+              class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-[11px] font-bold flex items-center gap-1.5 transition-colors">
+              <span id="gps-status-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+              <span id="gps-status-text" data-i18n="gps_calibrating">Calibrating GPS...</span>
+            </span>
+          </div>
+
+          <!-- Hidden Camera/File Input with native environment/rear camera capture on mobile -->
+          <input type="file" id="plate-photo-input" accept="image/*" capture="environment" class="hidden" onchange="window.handlePlatePhotoCapture(event)" />
+          
+          <!-- Hidden Offscreen Canvas for Tamper-evident Burn-in Watermarking -->
+          <canvas id="plate-geotag-canvas" class="hidden"></canvas>
+
+          <!-- STATE 1: Empty Capture Zone (Inviting, responsive, tap anywhere to launch camera) -->
+          <div id="plate-capture-empty"
+            class="group relative w-full py-8 px-4 rounded-xl border-2 border-dashed border-primary/40 hover:border-primary bg-primary/[0.03] hover:bg-primary/[0.08] transition flex flex-col items-center justify-center gap-2 cursor-pointer text-center"
+            onclick="triggerPlateCamera()">
+            <div class="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-105 transition shadow-xs">
+              <span class="material-symbols-outlined text-[32px]">photo_camera</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <p class="font-title-sm text-on-surface font-bold" data-i18n="capture_meal_plate">Capture Today's Meal Plate Photo</p>
+              <p class="text-[12px] text-on-surface-variant max-w-sm mt-0.5" data-i18n="capture_gps_hint">
+                Opens camera with real-time GPS coordinate & timestamp watermark
+              </p>
+            </div>
+            <button type="button"
+              class="mt-1 px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-[13px] font-bold shadow-xs active:scale-95 transition flex items-center gap-1.5 pointer-events-none">
+              <span class="material-symbols-outlined text-[18px]">add_a_photo</span>
+              <span data-i18n="take_plate_photo">Take Geotagged Photo</span>
+            </button>
+          </div>
+
+          <!-- STATE 2: Captured / Verified Plate Preview -->
+          <div id="plate-capture-preview-container" class="relative w-full rounded-xl overflow-hidden bg-slate-900 border border-surface-container hidden">
+            <!-- Full preview image -->
+            <img id="plate-preview-img" class="w-full h-56 sm:h-72 object-cover block" alt="Geotagged Plate Preview" />
+            
+            <!-- Live Accuracy Chip Top-Right -->
+            <div class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md text-white text-[11px] font-mono flex items-center gap-1.5 border border-white/20 shadow-md">
+              <span id="plate-accuracy-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="plate-accuracy-tag">±4.2 m Accuracy</span>
+            </div>
+
+            <!-- Verified Overlay Tag Top-Left -->
+            <div class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md bg-primary/90 backdrop-blur-md text-white text-[11px] font-bold flex items-center gap-1 shadow-md">
+              <span class="material-symbols-outlined text-[14px]">verified</span>
+              <span>PM-POSHAN Geostamped</span>
+            </div>
+
+            <!-- Bottom Floating Overlay Bar -->
+            <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent text-white flex items-end justify-between gap-2">
+              <div class="flex flex-col gap-0.5 min-w-0">
+                <div class="flex items-center gap-1 text-[11px] font-bold text-amber-300">
+                  <span class="material-symbols-outlined text-[14px]">location_on</span>
+                  <span id="plate-coords-tag" class="font-mono truncate">13.006842° N, 76.100412° E</span>
+                </div>
+                <div class="flex items-center gap-1 text-[10px] text-slate-200">
+                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span id="photo-time-tag">--:--</span>
+                </div>
+                <span class="text-[10px] text-slate-300 truncate" id="photo-school-tag">Kitchen Verification (Official Geostamp)</span>
+              </div>
+              <button
+                class="shrink-0 px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-label-sm text-[12px] font-bold shadow-xs active:scale-95 transition-transform flex items-center gap-1 border border-white/20"
+                type="button" onclick="retakePlatePhoto()">
+                <span class="material-symbols-outlined text-[15px]">refresh</span>
+                <span data-i18n="retake_photo">Retake</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- GPS Precision Status & Feedback Bar -->
+          <div id="plate-gps-feedback" class="flex items-center justify-between text-[11px] text-on-surface-variant px-1">
+            <span id="gps-coords-preview" class="font-mono text-[10px]">Awaiting camera capture...</span>
+            <span id="gps-precision-rating" class="font-bold text-secondary">High-Accuracy Mode</span>
+          </div>
+        </div>
+
+        <!-- Cook Cum Helper Attendance -->
+        <div
+          class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+              <h2 class="font-title-md text-title-md text-on-surface" data-i18n="cook_duty_title">Cook-cum-Helper Duty
+                Log</h2>
+            </div>
+            <span class="font-label-sm text-label-sm text-secondary font-bold">2/2 Present</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+            <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+              <div class="flex items-center gap-space-sm">
+                <div
+                  class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center font-bold">
+                  K1
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-label-lg text-label-lg text-on-surface font-bold">Head Cook</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Morning Shift • Meal
+                    Preparation</span>
+                </div>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">check</span>On Duty
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+              <div class="flex items-center gap-space-sm">
+                <div
+                  class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center font-bold">
+                  K2
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-label-lg text-label-lg text-on-surface font-bold">Assistant Cook</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Sanitation & Serving</span>
+                </div>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">check</span>On Duty
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Official Disclaimer -->
+        <div
+          class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container text-on-surface-variant text-body-sm font-body-sm">
+          <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+          <span data-i18n="portal_sync_notice">Once submitted, daily consumption will deduct stock automatically and
+            update the Karnataka Akshara Dasoha district portal with full audit trail.</span>
+        </div>
+
+      </div>
+
+      <!-- Sticky Submission Button Drawer -->
+      <div
+        class="fixed bottom-16 left-0 right-0 max-w-[440px] mx-auto z-40 px-margin py-2.5 bg-surface/90 backdrop-blur-md shadow-[0_-4px_12px_rgba(15,23,42,0.08)] border-t border-surface-container">
+        <button
+          class="w-full min-h-[46px] h-auto py-2.5 px-3 rounded-xl bg-primary text-on-primary text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:bg-primary-container active:scale-[0.985] transition-all text-center leading-tight"
+          id="submitMealLedgerBtn" onclick="submitMealLedger()" type="button">
+          <span class="material-symbols-outlined text-[19px] shrink-0">sync_saved_locally</span>
+          <span id="submit-meal-btn-text" data-i18n="submit_meal_ledger">Submit Daily MDM Ledger to Portal</span>
+        </button>
+      </div>
+    </main>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW 5: REPORTS & AUDIT TRAIL (Requirement Letter #8 & #11) -->
+    <!-- ============================================================== -->
+    <main id="view-reports" class="hidden flex flex-col relative w-full pt-20 pb-24 bg-transparent min-h-screen">
+      <div class="flex flex-col w-full px-margin gap-space-md py-space-md">
+
+        <!-- Reports Header Card -->
+        <div
+          class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container flex flex-col gap-1">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-xs font-bold text-primary uppercase tracking-wider">PM-POSHAN / ಅಕ್ಷರ
+              ದಾಸೋಹ</span>
+            <span
+              class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-xs font-bold">Ref:
+              BCS586</span>
+          </div>
+          <h1 class="font-headline-md text-headline-md text-on-surface font-bold" data-i18n="monthly_compliance_title">
+            Monthly Compliance Statement</h1>
+          <p class="font-body-sm text-body-sm text-on-surface-variant" id="report-school-subtitle">PM-POSHAN School
+            Compliance Register</p>
+
+          <div class="mt-3 flex items-center gap-2">
+            <button
+              class="flex-1 py-2 px-3 rounded-lg bg-primary text-on-primary font-label-md text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              onclick="exportMonthlyReportCSV()">
+              <span class="material-symbols-outlined text-[16px]">download</span>
+              <span>Export CSV</span>
+            </button>
+            <button
+              class="flex-1 py-2 px-3 rounded-lg bg-surface-container-high text-on-surface font-label-md text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              onclick="window.print()">
+              <span class="material-symbols-outlined text-[16px]">print</span>
+              <span>Print Register</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Stock Ledger Statement Table -->
+        <div
+          class="rounded-xl bg-surface-container-lowest p-3 sm:p-space-md shadow-sm border border-surface-container flex flex-col gap-2 min-w-0 overflow-hidden">
+          <h2 class="font-title-md font-bold text-on-surface" data-i18n="stock_ledger_title">Grain & Commodity Ledger
+            (Kg/L)</h2>
+          <div class="overflow-x-auto w-full -mx-1 px-1">
+            <table class="w-full text-left text-xs min-w-[320px]">
+              <thead>
+                <tr class="border-b border-surface-container text-on-surface-variant font-bold">
+                  <th class="py-2 pr-2 whitespace-nowrap">Item</th>
+                  <th class="py-2 px-1 whitespace-nowrap">Opening</th>
+                  <th class="py-2 px-1 whitespace-nowrap">Received</th>
+                  <th class="py-2 px-1 whitespace-nowrap">Consumed</th>
+                  <th class="py-2 pl-1 whitespace-nowrap">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="reports-ledger-body" class="divide-y divide-surface-container-low font-mono">
+                <tr>
+                  <td colspan="5" class="py-4 text-center text-on-surface-variant font-sans text-xs">
+                    No stock transactions recorded yet. Inward receipts and meal logs will appear here.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Official Head Master Sign-off Card -->
+        <div class="rounded-xl bg-surface-container-low p-space-md border border-primary/20 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-xs font-bold text-primary">OFFICIAL COMPLIANCE SIGN-OFF</span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-secondary">
+              <span class="material-symbols-outlined text-[15px]">verified</span>Digitally Sealed
+            </span>
+          </div>
+          <div class="flex items-center gap-3 mt-1">
+            <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold"
+              id="signoff-avatar">
+              HM
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-lg font-bold text-on-surface" id="signoff-hm-name">Designated Head Master</span>
+              <span class="text-xs text-on-surface-variant" id="signoff-school-name">Official Institutional Seal</span>
+            </div>
+          </div>
+          <p class="font-body-sm text-[11px] text-on-surface-variant mt-1 italic">
+            "I hereby verify that student headcounts and food ration distributions have been calculated according to
+            official PM-POSHAN guidelines and verified against school registers."
+          </p>
+        </div>
+
+        <!-- Tamper-Evident Security Audit Trail (Requirement Letter #11) -->
+        <div
+          class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[20px]">history_edu</span>
+              <h2 class="font-title-md font-bold text-on-surface" data-i18n="audit_trail_title">Security Audit Trail
+              </h2>
+            </div>
+            <span
+              class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-mono">Immutable</span>
+          </div>
+
+          <div class="flex flex-col gap-2 mt-1" id="audit-logs-container">
+            <p class="text-xs text-on-surface-variant text-center py-4">Audit log entries will appear here as actions
+              are performed.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+
+    <!-- ============================================================== -->
+    <!-- BOTTOM TAB NAVIGATION BAR (Stitch Layout) -->
+    <!-- ============================================================== -->
+    <nav id="bottom-navbar"
+      class="hidden fixed bottom-0 left-0 right-0 mx-auto w-full max-w-[440px] z-50 pb-safe bg-surface/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)] border-t border-surface-container">
+      <div class="h-16 px-1 flex items-center justify-around">
+        <button
+          class="nav-tab-btn active relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] px-1 py-1 rounded-xl text-primary font-bold bg-primary-container/20 transition-all pressable"
+          data-target="dashboard" data-active="true" onclick="app.navigateTo('dashboard')" type="button">
+          <span class="material-symbols-outlined text-[22px] sm:text-[24px] transition-transform duration-200">dashboard</span>
+          <span class="font-label-sm text-[10px] sm:text-[11px] leading-tight truncate max-w-full text-center mt-0.5 font-bold" data-i18n="nav_dashboard">Dashboard</span>
+        </button>
+
+        <button
+          class="nav-tab-btn relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] px-1 py-1 rounded-xl text-on-surface-variant hover:text-primary transition-all pressable"
+          data-target="attendance" data-active="false" onclick="app.navigateTo('attendance')" type="button">
+          <span class="material-symbols-outlined text-[22px] sm:text-[24px] transition-transform duration-200">checklist</span>
+          <span class="font-label-sm text-[10px] sm:text-[11px] leading-tight truncate max-w-full text-center mt-0.5 font-bold" data-i18n="nav_attendance">Attendance</span>
+        </button>
+
+        <button
+          class="nav-tab-btn relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] px-1 py-1 rounded-xl text-on-surface-variant hover:text-primary transition-all pressable"
+          data-target="meals" data-active="false" onclick="app.navigateTo('meals')" type="button">
+          <span class="material-symbols-outlined text-[22px] sm:text-[24px] transition-transform duration-200">restaurant</span>
+          <span class="font-label-sm text-[10px] sm:text-[11px] leading-tight truncate max-w-full text-center mt-0.5 font-bold" data-i18n="nav_meals">MDM Meal</span>
+        </button>
+
+        <button
+          class="nav-tab-btn relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] px-1 py-1 rounded-xl text-on-surface-variant hover:text-primary transition-all pressable"
+          data-target="reports" data-active="false" onclick="app.navigateTo('reports')" type="button">
+          <span class="material-symbols-outlined text-[22px] sm:text-[24px] transition-transform duration-200">description</span>
+          <span class="font-label-sm text-[10px] sm:text-[11px] leading-tight truncate max-w-full text-center mt-0.5 font-bold" data-i18n="nav_reports">Reports</span>
+        </button>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL 1: FRESH PRODUCE & STOCK INWARD LOGGING -->
+    <!-- ============================================================== -->
+    <div id="modal-fresh-produce"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-surface rounded-t-2xl sm:rounded-2xl p-space-md shadow-2xl flex flex-col gap-3 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">local_shipping</span>
+            <h3 class="font-title-md font-bold text-on-surface">Log Fresh Produce / Stock Inward</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface"
+            onclick="closeProduceModal()">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-2.5 text-left">
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Select Commodity</label>
+            <select id="modal-item-id"
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary">
+              <option value="1">Rice / Raw Grains (ಅಕ್ಕಿ)</option>
+              <option value="2">Wheat / Atta (ಗೋಧಿ)</option>
+              <option value="3">Toor Dal (ತೊಗರಿ ಬೇಳೆ)</option>
+              <option value="4">Moong Dal (ಹೆಸರು ಬೇಳೆ)</option>
+              <option value="5">Fortified Oil (ಅಡುಗೆ ಎಣ್ಣೆ)</option>
+              <option value="6">Eggs (ಮೊಟ್ಟೆ)</option>
+              <option value="7">Milk Powder (ಕ್ಷೀರ ಭಾಗ್ಯ)</option>
+              <option value="8">Salt (ಉಪ್ಪು)</option>
+              <option value="9">Sambar Spices (ಸಾಂಬಾರ್ ಮಸಾಲೆ)</option>
+              <option value="10">Nutri Chikki (ಚಿಕ್ಕಿ)</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Inward Quantity (kg / L / units)</label>
+            <input id="modal-item-qty" type="number" step="0.5" required
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+              placeholder="e.g. 50.0" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Vendor / Supplier Name</label>
+            <input id="modal-vendor-name" type="text"
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+              placeholder="e.g. Hassan Taluk Food Depot" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Bill / Challan Number</label>
+            <input id="modal-bill-no" type="text"
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+              placeholder="e.g. BL-2026-9810" />
+          </div>
+
+          <button type="button" onclick="submitStockInward()"
+            class="w-full h-11 mt-1 rounded-xl bg-primary text-on-primary font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[20px]">save</span>
+            <span>Record Inward Stock</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL 2: CLOUD & API KEYS SETTINGS (Stitch, Firebase, Meta) -->
+    <!-- ============================================================== -->
+    <div id="modal-settings"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-surface rounded-t-2xl sm:rounded-2xl p-space-md shadow-2xl flex flex-col gap-3 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">settings</span>
+            <h3 class="font-title-md font-bold text-on-surface">Cloud Integrations & API Keys</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface"
+            onclick="closeSettingsModal()">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-3 text-left">
+          <!-- Stitch Integration Status -->
+          <div class="p-3 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-1">
+            <div class="flex items-center justify-between">
+              <span class="font-label-md font-bold text-primary flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">draw</span>Stitch Design MCP
+              </span>
+              <span
+                class="px-2 py-0.5 rounded-full bg-secondary-container text-secondary text-[10px] font-bold">Connected</span>
+            </div>
+            <span class="text-xs text-on-surface-variant">Project: <strong>Smart-Nourish & Attend UI</strong>
+              (`4059288306097933423`)</span>
+            <span class="text-[10px] font-mono text-on-surface-variant truncate">API Key:
+              AQ.Ab8RN6I89oRpf9bWQ9JNPgf__Hw...</span>
+          </div>
+
+          <!-- Firebase Inbuilt Init Settings -->
+          <div class="p-3 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-2">
+            <span class="font-label-md font-bold text-on-surface flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px] text-tertiary">local_fire_department</span>Firebase
+              Configuration
+            </span>
+            <div class="flex flex-col space-y-1">
+              <label class="text-[11px] font-semibold text-on-surface-variant">Firebase API Key</label>
+              <input id="setting-firebase-key" type="text"
+                class="h-9 px-2 rounded bg-surface-container text-xs font-mono"
+                value="AIzaSyCP3dcZ0Hu0j_NbQ_mA9W2Zo2Zk17RDKBI" placeholder="AIzaSy..." />
+            </div>
+            <div class="flex flex-col space-y-1">
+              <label class="text-[11px] font-semibold text-on-surface-variant">Firebase Project ID</label>
+              <input id="setting-firebase-project" type="text"
+                class="h-9 px-2 rounded bg-surface-container text-xs font-mono" value="mid-day-meal-project-d475f"
+                placeholder="mid-day-meal-project-d475f" />
+            </div>
+          </div>
+
+          <!-- Meta Integration -->
+          <div class="p-3 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-2">
+            <span class="font-label-md font-bold text-on-surface flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px] text-primary">hub</span>Meta Integration
+            </span>
+            <div class="flex flex-col space-y-1">
+              <label class="text-[11px] font-semibold text-on-surface-variant">Meta App Secret</label>
+              <input id="setting-meta-secret" type="password"
+                class="h-9 px-2 rounded bg-surface-container text-xs font-mono" value="74a94bc85dee2d0da5c1539be31f4d13"
+                placeholder="74a94bc85dee2d0da5c1539be31f4d13" />
+            </div>
+            <div class="flex flex-col space-y-1">
+              <label class="text-[11px] font-semibold text-on-surface-variant">Meta App ID (Optional)</label>
+              <input id="setting-meta-appid" type="text" class="h-9 px-2 rounded bg-surface-container text-xs font-mono"
+                placeholder="e.g. 109283746592817" />
+            </div>
+          </div>
+
+          <button type="button"
+            class="w-full h-11 rounded-xl bg-primary text-on-primary font-bold text-sm shadow-md active:scale-95 transition-all"
+            onclick="saveCloudSettings()">
+            Save Configuration Keys
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL: MOBILE PHONE ACCESS & QR CODE -->
+    <!-- ============================================================== -->
+    <div id="modal-phone-access"
+      class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-surface dark:bg-[#0f172a] rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4 max-h-[92vh] overflow-y-auto border border-sky-100 dark:border-sky-500/20 text-[#0f172a] dark:text-[#e0e8f0]">
+        <div class="flex items-center justify-between border-b border-surface-container dark:border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-slate-800 text-primary dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-500/20">
+              <span class="material-symbols-outlined text-[24px]">devices</span>
+            </div>
+            <div>
+              <h3 class="font-title-md font-bold text-on-surface dark:text-white leading-tight">Run on Mobile Phone</h3>
+              <p class="text-[11px] text-on-surface-variant dark:text-slate-400">Scan QR Code or enter link in your
+                phone browser</p>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-surface-container dark:bg-slate-800 flex items-center justify-center text-on-surface-variant hover:text-on-surface dark:text-slate-400 dark:hover:text-white"
+            onclick="closePhoneAccessModal()">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- QR Code Container -->
+        <div
+          class="flex flex-col items-center justify-center bg-white dark:bg-slate-800/80 p-5 rounded-2xl border border-sky-100 dark:border-sky-800/40 shadow-xs">
+          <div id="phone-qr-box"
+            class="w-52 h-52 bg-white rounded-xl flex items-center justify-center p-2 border border-slate-200 shadow-inner">
+            <img id="phone-qr-img" alt="Scan with Phone Camera" class="w-full h-full object-contain" src="" />
+          </div>
+          <span class="text-[11px] font-semibold text-sky-700 dark:text-sky-300 mt-2.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px]">qr_code_scanner</span>
+            <span>Point your phone camera here to open</span>
+          </span>
+        </div>
+
+        <!-- Direct URL and Copy Button -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[11px] font-semibold text-on-surface-variant dark:text-slate-300">Or type this URL into
+            your phone's browser:</label>
+          <div class="flex items-center gap-2">
+            <input id="phone-mobile-url-input" type="text" readonly
+              class="flex-1 h-10 px-3 rounded-xl bg-surface-container dark:bg-slate-800 text-xs font-mono font-semibold text-primary dark:text-sky-300 border border-surface-container-high dark:border-slate-700 select-all"
+              value="http://10.201.3.204:8000/" />
+            <button id="btn-copy-mobile-url" onclick="copyMobileUrl()" type="button"
+              class="h-10 px-3.5 rounded-xl bg-primary hover:bg-primary-hover text-on-primary font-bold text-xs flex items-center gap-1.5 shrink-0 active:scale-95 transition-all shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">content_copy</span>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick 2-Step Wi-Fi Check -->
+        <div
+          class="p-3 rounded-xl bg-sky-50 dark:bg-slate-800/60 border border-sky-100 dark:border-sky-900/40 text-xs flex flex-col gap-2">
+          <div class="font-bold text-sky-900 dark:text-sky-300 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">wifi</span>
+            <span>Prerequisite Checklist:</span>
+          </div>
+          <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+            <span
+              class="w-4 h-4 rounded-full bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+            <span>Make sure your phone is connected to the <strong>same Wi-Fi or phone hotspot</strong> as this
+              PC.</span>
+          </div>
+          <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+            <span
+              class="w-4 h-4 rounded-full bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+            <span>Open in Chrome or Safari. You can tap <strong>"Add to Home Screen"</strong> to use it as a native
+              offline app!</span>
+          </div>
+        </div>
+
+        <button type="button"
+          class="w-full h-10 rounded-xl bg-surface-container-high dark:bg-slate-800 text-on-surface dark:text-slate-200 font-semibold text-xs active:scale-95 transition-all hover:bg-surface-container"
+          onclick="closePhoneAccessModal()">
+          Close
+        </button>
+      </div>
+    </div>
+
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL 1: HEADMASTER PORTAL LOGIN (Strictly Headmaster Flow) -->
+    <!-- ============================================================== -->
+    <div id="modal-login-portal"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-white dark:bg-[#0f172a] rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4 max-h-[92vh] overflow-y-auto border border-sky-100 dark:border-sky-500/20 text-[#0f172a] dark:text-[#e0e8f0]">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between pb-2 border-b border-sky-100 dark:border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-9 h-9 rounded-xl bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[20px]">military_tech</span>
+            </div>
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <h3 class="font-headline text-[16px] font-bold text-slate-900 dark:text-white"
+                  data-i18n="modal_login_title">Headmaster Portal Login</h3>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300">HM Only</span>
+              </div>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">PM POSHAN • Karnataka Unified Portal</span>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-sky-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white active:scale-95 transition-all cursor-pointer"
+            onclick="closeLoginModal()" type="button">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Social SSO: Firebase Google & Meta SSO (Both log in as Headmaster) -->
+        <div class="flex flex-col gap-2 pt-0.5">
+          <!-- Firebase Google Sign In Button -->
+          <button id="btn-firebase-google" onclick="loginWithFirebaseGoogle()" type="button"
+            class="w-full min-h-[48px] h-auto py-3 px-4 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-[13px] border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 shadow-2xs flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight cursor-pointer">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 24 24">
+              <path fill="#4285F4"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path fill="#34A853"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path fill="#FBBC05"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+              <path fill="#EA4335"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+            </svg>
+            <span data-i18n="btn_firebase_google">Sign in with Google (Firebase)</span>
+          </button>
+
+          <!-- Meta (Facebook) Sign In Button -->
+          <button id="btn-meta-auth" onclick="loginWithMeta()" type="button"
+            class="w-full min-h-[48px] h-auto py-3 px-4 rounded-xl bg-[#0866FF] hover:bg-[#0654d4] text-white font-bold text-xs sm:text-[13px] shadow-2xs flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight cursor-pointer">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+            <span data-i18n="btn_meta_login">Continue with Meta</span>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative py-1 flex items-center justify-center">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-sky-100 dark:border-slate-800"></div>
+          </div>
+          <span
+            class="relative px-3 bg-white dark:bg-[#0f172a] text-[11px] uppercase tracking-wider text-slate-400 font-semibold"
+            data-i18n="or_school_credentials">or Headmaster credentials</span>
+        </div>
+
+        <!-- Auth Switcher (OTP vs Password) -->
+        <div
+          class="flex rounded-xl bg-sky-50/60 dark:bg-slate-800/60 p-1 border border-sky-100/60 dark:border-slate-700/30">
+          <button id="tabOtpBtn"
+            class="flex-1 py-1.5 rounded-lg text-[13px] font-bold bg-white dark:bg-slate-700 text-sky-700 dark:text-sky-300 shadow-2xs transition-all cursor-pointer"
+            onclick="switchAuthMode('otp')" type="button" data-i18n="tab_otp_login">
+            Login with OTP
+          </button>
+          <button id="tabPwdBtn"
+            class="flex-1 py-1.5 rounded-lg text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
+            onclick="switchAuthMode('password')" type="button" data-i18n="tab_password_login">
+            Password Login
+          </button>
+        </div>
+
+        <!-- Credentials Card: Form 1 - OTP Login -->
+        <div id="auth-otp-form" class="space-y-3">
+          <div class="flex flex-col space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+                for="otp-email-input">
+                <span data-i18n="email_or_mobile">Headmaster Email / Mobile</span>
+                <span class="text-rose-500 font-bold">*</span>
+              </label>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">Official HM Contact</span>
+            </div>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                <span class="material-symbols-outlined text-[19px]">mail</span>
+              </div>
+              <input
+                class="w-full min-h-[48px] h-12 pl-11 pr-4 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                id="otp-email-input" placeholder="e.g. hm@school.karnataka.gov.in" type="text" value="" />
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400" data-i18n="otp_dispatch_hint">A 6-digit secure
+              verification code will be dispatched to your email inbox.</p>
+          </div>
+
+          <!-- Request OTP Button: Sky Blue Pill -->
+          <button id="btn-request-otp"
+            class="min-h-[50px] h-auto w-full px-4 py-3 bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 dark:from-sky-500 dark:via-sky-400 dark:to-sky-500 text-white font-bold text-xs sm:text-[14px] rounded-full shadow-glow-sky flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:brightness-105 text-center leading-tight cursor-pointer"
+            onclick="requestOTP()" type="button">
+            <span class="material-symbols-outlined text-[18px] shrink-0">send</span>
+            <span id="btn-request-otp-text" data-i18n="btn_request_otp">Send Login OTP to Email</span>
+          </button>
+
+          <!-- OTP Input Section -->
+          <div id="otp-verify-section"
+            class="hidden flex flex-col space-y-3 pt-2 border-t border-sky-100 dark:border-slate-800">
+            <!-- Email Inbox Guidance Notice -->
+            <div id="otp-inbox-notice"
+              class="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/40 text-sky-900 dark:text-sky-200 flex items-start gap-2.5 text-xs shadow-xs">
+              <span class="material-symbols-outlined text-sky-600 dark:text-sky-400 text-[20px] shrink-0 mt-0.5">mark_email_read</span>
+              <div class="leading-snug">
+                <p class="font-bold text-[12px] text-sky-950 dark:text-sky-100">Check Your Email Inbox</p>
+                <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">A 6-digit verification code was emailed to you. Please check your inbox and enter it below.</p>
+              </div>
+            </div>
+
+            <div class="flex flex-col space-y-1">
+              <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+                for="otp-code-input">
+                <span data-i18n="otp_label">Enter 6-Digit Email OTP</span>
+                <span class="text-rose-500 font-bold">*</span>
+              </label>
+              <div class="relative flex items-center">
+                <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                  <span class="material-symbols-outlined text-[20px]">pin</span>
+                </div>
+                <input
+                  class="w-full min-h-[48px] h-12 pl-11 pr-4 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[18px] font-bold rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner tracking-widest text-center"
+                  id="otp-code-input" inputmode="numeric" maxlength="6" placeholder="• • • • • •" type="text" />
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
+                <span id="otp-timer">Expires in 5:00</span>
+                <button class="text-sky-600 dark:text-sky-400 font-semibold hover:underline cursor-pointer" onclick="requestOTP()"
+                  type="button" data-i18n="btn_resend_otp">Resend OTP</button>
+              </div>
+            </div>
+
+            <button id="btn-verify-otp"
+              class="min-h-[50px] h-auto w-full px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-[14px] rounded-full shadow-md flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight cursor-pointer"
+              onclick="verifyOTP()" type="button">
+              <span class="material-symbols-outlined text-[18px] shrink-0">verified_user</span>
+              <span data-i18n="btn_verify_otp">Verify & Enter</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Credentials Card: Form 2 - Password Login -->
+        <div id="auth-pwd-form" class="hidden space-y-3">
+          <div class="flex flex-col space-y-1">
+            <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+              for="pwd-email-input">
+              <span data-i18n="email_label">Headmaster Email Address</span>
+              <span class="text-rose-500 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[19px]">mail</span>
+              </div>
+              <input
+                class="w-full min-h-[48px] h-12 pl-11 pr-4 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                id="pwd-email-input" placeholder="e.g. hm@school.karnataka.gov.in" type="email" value="" />
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+                for="pwd-pass-input">
+                <span data-i18n="password_label">Password</span>
+                <span class="text-rose-500 font-bold">*</span>
+              </label>
+              <button type="button" onclick="openForgotPasswordModal()"
+                class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline cursor-pointer">
+                Forgot Password?
+              </button>
+            </div>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[19px]">lock</span>
+              </div>
+              <input
+                class="w-full min-h-[48px] h-12 pl-11 pr-11 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                id="pwd-pass-input" placeholder="Enter password" type="password" value="" />
+              <button class="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                type="button" onclick="togglePassVisibility('pwd-pass-input')">
+                <span class="material-symbols-outlined text-[19px]">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-0.5">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input checked="" class="w-3.5 h-3.5 rounded text-sky-600 focus:ring-sky-500" type="checkbox" />
+              <span class="text-[12px] text-slate-600 dark:text-slate-300">Keep School Terminal Logged In</span>
+            </label>
+            <span class="text-[11px] text-sky-600 dark:text-sky-400 font-medium">256-bit Encrypted</span>
+          </div>
+
+          <button
+            class="min-h-[50px] h-auto w-full px-4 py-3 bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 dark:from-sky-500 dark:via-sky-400 dark:to-sky-500 text-white font-bold text-xs sm:text-[14px] rounded-full shadow-glow-sky flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:brightness-105 text-center leading-tight cursor-pointer"
+            onclick="loginWithPassword()" type="button">
+            <span class="material-symbols-outlined text-[18px] shrink-0">login</span>
+            <span data-i18n="btn_login_password">Sign In Securely</span>
+          </button>
+        </div>
+
+        <!-- Phone Access QR Code Button inside Login Modal -->
+        <button
+          class="pc-only-btn min-h-[42px] h-auto w-full px-3 py-2 bg-gradient-to-r from-sky-50 to-indigo-50 hover:from-sky-100 hover:to-indigo-100 dark:from-slate-800/90 dark:to-slate-800 text-sky-700 dark:text-sky-300 font-bold text-xs sm:text-[13px] rounded-full border border-sky-200 dark:border-sky-500/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-center leading-tight shadow-2xs cursor-pointer mt-1"
+          onclick="openPhoneAccessModal()" type="button" title="Scan QR Code to open and login on mobile phone">
+          <span class="material-symbols-outlined text-[19px] text-sky-600 dark:text-sky-400 shrink-0">qr_code_scanner</span>
+          <span>Open on Phone (QR Code)</span>
+        </button>
+
+        <!-- Switch to Registration Footer Link -->
+        <div class="text-center pt-2 border-t border-sky-100 dark:border-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            New Institution?
+            <button type="button" onclick="closeLoginModal(); openSchoolSetupModal();"
+              class="font-bold text-sky-600 dark:text-sky-400 hover:underline ml-1 cursor-pointer">
+              Register School & Headmaster
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL 2: RESET PASSWORD VIA EMAIL OTP -->
+    <!-- ============================================================== -->
+    <div id="modal-forgot-password"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-white dark:bg-[#0f172a] rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-4 max-h-[92vh] overflow-y-auto border border-sky-100 dark:border-sky-500/20 text-[#0f172a] dark:text-[#e0e8f0]">
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-2 border-b border-sky-100 dark:border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[20px]">lock_reset</span>
+            </div>
+            <div class="flex flex-col">
+              <h3 class="font-headline text-[16px] font-bold text-slate-900 dark:text-white">Reset Headmaster Password</h3>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">PM POSHAN • Secure Email Verification</span>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-sky-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white active:scale-95 transition-all cursor-pointer"
+            onclick="closeForgotPasswordModal()" type="button">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Step 1: Request Reset Code -->
+        <div id="forgot-step-1" class="flex flex-col gap-3">
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Enter your registered official Headmaster email address. A 6-digit secure verification code will be dispatched to your email inbox.
+          </p>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+              for="forgot-email-input">
+              <span>Official Registered Headmaster Email</span>
+              <span class="text-rose-500 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[19px]">mail</span>
+              </div>
+              <input id="forgot-email-input" type="email" required
+                class="w-full min-h-[48px] h-12 pl-11 pr-4 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="e.g. hm@school.karnataka.gov.in" />
+            </div>
+          </div>
+
+          <button id="btn-forgot-send-otp" type="button" onclick="requestPasswordResetOTP()"
+            class="w-full min-h-[50px] h-auto py-3 px-4 bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 text-white font-bold text-xs sm:text-[14px] rounded-full shadow-glow-sky flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:brightness-105 cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">send</span>
+            <span>Send Password Reset Code</span>
+          </button>
+
+          <div class="text-center pt-1">
+            <button type="button" onclick="closeForgotPasswordModal(); openLoginModal();"
+              class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-300 cursor-pointer">
+              ← Back to Headmaster Login
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Verify Code and Set New Password -->
+        <div id="forgot-step-2" class="hidden flex flex-col gap-3">
+          <div class="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/40 text-sky-900 dark:text-sky-200 flex items-start gap-2.5 text-xs shadow-xs">
+            <span class="material-symbols-outlined text-sky-600 dark:text-sky-400 text-[20px] shrink-0 mt-0.5">mark_email_read</span>
+            <div class="leading-snug">
+              <p class="font-bold text-[12px] text-sky-950 dark:text-sky-100">Check Your Email Inbox</p>
+              <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">
+                A 6-digit verification code has been dispatched to <span id="forgot-sent-to-email" class="font-bold text-sky-700 dark:text-sky-300"></span>. Please check your inbox and enter it below.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+              for="forgot-otp-code">
+              <span>Enter 6-Digit Reset Code</span>
+              <span class="text-rose-500 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[20px]">pin</span>
+              </div>
+              <input id="forgot-otp-code" type="text" inputmode="numeric" maxlength="6" required
+                class="w-full min-h-[48px] h-12 pl-11 pr-4 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[18px] font-bold rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner tracking-widest text-center"
+                placeholder="• • • • • •" />
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+              for="forgot-new-password">
+              <span>New Password (Min 6 chars)</span>
+              <span class="text-rose-500 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[19px]">lock</span>
+              </div>
+              <input id="forgot-new-password" type="password" required minlength="6"
+                class="w-full min-h-[48px] h-12 pl-11 pr-11 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="Enter new password" />
+              <button class="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                type="button" onclick="togglePassVisibility('forgot-new-password')">
+                <span class="material-symbols-outlined text-[19px]">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-[13px] text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1"
+              for="forgot-confirm-password">
+              <span>Confirm New Password</span>
+              <span class="text-rose-500 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <div class="absolute left-3 flex items-center pointer-events-none text-slate-400">
+                <span class="material-symbols-outlined text-[19px]">lock_clock</span>
+              </div>
+              <input id="forgot-confirm-password" type="password" required minlength="6"
+                class="w-full min-h-[48px] h-12 pl-11 pr-11 bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-[14px] rounded-xl border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="Re-enter new password" />
+              <button class="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                type="button" onclick="togglePassVisibility('forgot-confirm-password')">
+                <span class="material-symbols-outlined text-[19px]">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <button id="btn-forgot-submit" type="button" onclick="submitPasswordReset()"
+            class="w-full min-h-[50px] h-auto py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-[14px] rounded-full shadow-md flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:brightness-105 cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+            <span>Set New Password & Return to Login</span>
+          </button>
+
+          <div class="flex items-center justify-between text-xs pt-1">
+            <button type="button" onclick="requestPasswordResetOTP()" class="text-sky-600 dark:text-sky-400 font-medium hover:underline cursor-pointer">
+              Resend Code
+            </button>
+            <button type="button" onclick="closeForgotPasswordModal(); openLoginModal();" class="text-slate-500 dark:text-slate-400 hover:underline cursor-pointer">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL 3: REGISTER INSTITUTION & HEADMASTER -->
+    <!-- ============================================================== -->
+    <div id="modal-school-setup"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-white dark:bg-[#0f172a] rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl flex flex-col gap-3.5 max-h-[92vh] overflow-y-auto border border-sky-100 dark:border-sky-500/20 text-[#0f172a] dark:text-[#e0e8f0]">
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-2 border-b border-sky-100 dark:border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-9 h-9 rounded-xl bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[20px]">domain_add</span>
+            </div>
+            <div class="flex flex-col">
+              <h3 class="font-headline text-[16px] font-bold text-slate-900 dark:text-white">School & Headmaster Registration</h3>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">PM POSHAN Institutional Onboarding</span>
+            </div>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-sky-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white active:scale-95 transition-all cursor-pointer"
+            onclick="closeSchoolSetupModal()" type="button">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Role Badge: Dedicated Headmaster Onboarding -->
+        <div class="p-2.5 rounded-xl bg-sky-50/90 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/40 flex items-center gap-2 text-xs">
+          <span class="material-symbols-outlined text-sky-700 dark:text-sky-300 text-[18px]">military_tech</span>
+          <span class="text-sky-950 dark:text-sky-200 font-semibold">
+            Institutional Role: <strong>Head Master / Administrator (ಮುಖ್ಯೋಪಾಧ್ಯಾಯರು)</strong>
+          </span>
+        </div>
+
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
+          Enter your institution details. When registered, your school, Headmaster administrative credentials, initial classes, and inventory categories will be configured immediately.
+        </p>
+
+        <form id="form-school-setup" onsubmit="event.preventDefault(); submitSchoolSetup();"
+          class="flex flex-col gap-2.5 text-left">
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">School DISE Code *</label>
+            <input id="setup-dise-code" type="text" required
+              class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+              placeholder="e.g. 29210203001" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">School Name (English) *</label>
+            <input id="setup-school-name" type="text" required
+              class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+              placeholder="e.g. Government High School ..." />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">ಶಾಲೆಯ ಹೆಸರು (ಕನ್ನಡ - ಐಚ್ಛಿಕ)</label>
+            <input id="setup-school-name-kn" type="text"
+              class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+              placeholder="ಉದಾ: ಸರ್ಕಾರಿ ಪ್ರೌಢಶಾಲೆ ..." />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="flex flex-col space-y-1.5">
+              <label class="text-xs sm:text-[13px] font-bold text-slate-700 dark:text-slate-300">Taluk *</label>
+              <input id="setup-taluk" type="text" required
+                class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="e.g. Belur" />
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <label class="text-xs sm:text-[13px] font-bold text-slate-700 dark:text-slate-300">District *</label>
+              <input id="setup-district" type="text" required
+                class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="e.g. Hassan" />
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Head Master / Admin Name *</label>
+            <input id="setup-hm-name" type="text" required
+              class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+              placeholder="e.g. Ramesh Kumar" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Official Headmaster Email *</label>
+            <input id="setup-email" type="email" required
+              class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+              placeholder="e.g. hm@school.karnataka.gov.in" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="flex flex-col space-y-1.5">
+              <label class="text-xs sm:text-[13px] font-bold text-slate-700 dark:text-slate-300">Mobile Phone</label>
+              <input id="setup-phone" type="tel"
+                class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="10-digit number" />
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <label class="text-xs sm:text-[13px] font-bold text-slate-700 dark:text-slate-300">Admin Password *</label>
+              <input id="setup-password" type="password" required minlength="6"
+                class="w-full min-h-[48px] h-12 px-4 rounded-xl bg-sky-50/40 dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm border border-sky-100 dark:border-sky-500/20 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-inner"
+                placeholder="Min 6 chars" />
+            </div>
+          </div>
+
+          <button id="btn-submit-setup" type="submit"
+            class="w-full min-h-[50px] h-auto py-3 px-4 mt-3 rounded-full bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 text-white font-bold text-sm sm:text-base shadow-glow-sky hover:brightness-105 active:scale-[0.98] transition-all text-center leading-tight cursor-pointer">
+            Register School & Enter Portal
+          </button>
+        </form>
+
+        <!-- Switch to Login Link -->
+        <div class="text-center pt-1 border-t border-sky-100 dark:border-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Already registered?
+            <button type="button" onclick="closeSchoolSetupModal(); openLoginModal();"
+              class="font-bold text-sky-600 dark:text-sky-400 hover:underline ml-1 cursor-pointer">
+              Headmaster Login
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL 4: ADD STUDENT ENROLLMENT -->
+    <!-- ============================================================== -->
+    <div id="modal-add-student"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div
+        class="w-full max-w-md bg-surface rounded-t-2xl sm:rounded-2xl p-space-md shadow-2xl flex flex-col gap-3 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">person_add</span>
+            <h3 class="font-title-md font-bold text-on-surface">Enroll Student</h3>
+          </div>
+          <button
+            class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface"
+            onclick="closeAddStudentModal()">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <form id="form-add-student" onsubmit="event.preventDefault(); submitAddStudent();"
+          class="flex flex-col gap-2.5 text-left">
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Class / Grade *</label>
+            <select id="student-class-select" required
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md border-none focus:ring-2 focus:ring-primary">
+              <!-- Dynamically populated classes -->
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex flex-col space-y-1">
+              <label class="text-xs font-bold text-on-surface-variant">Roll No. (Optional)</label>
+              <input id="student-roll-no" type="number"
+                class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+                placeholder="Auto" />
+            </div>
+            <div class="flex flex-col space-y-1">
+              <label class="text-xs font-bold text-on-surface-variant">Gender *</label>
+              <select id="student-gender"
+                class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md border-none focus:ring-2 focus:ring-primary">
+                <option value="M">Boy (M)</option>
+                <option value="F">Girl (F)</option>
+                <option value="O">Other (O)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Student Full Name (English) *</label>
+            <input id="student-name" type="text" required
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+              placeholder="e.g. Ananya S" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">ವಿದ್ಯಾರ್ಥಿಯ ಹೆಸರು (ಕನ್ನಡ - ಐಚ್ಛಿಕ)</label>
+            <input id="student-name-kn" type="text"
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:ring-2 focus:ring-primary"
+              placeholder="ಉದಾ: ಅನನ್ಯ ಎಸ್" />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label class="text-xs font-bold text-on-surface-variant">Nutrition Preference *</label>
+            <select id="student-diet"
+              class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md border-none focus:ring-2 focus:ring-primary">
+              <option value="egg">Boiled Egg (ಮೊಟ್ಟೆ)</option>
+              <option value="banana">Banana (ಬಾಳೆಹಣ್ಣು)</option>
+              <option value="chikki">Nutri-Chikki (ಕಡಲೆಕಾಯಿ ಚಿಕ್ಕಿ)</option>
+            </select>
+          </div>
+
+          <button id="btn-submit-student" type="submit"
+            class="w-full min-h-[46px] h-auto py-2.5 px-3 mt-2 rounded-xl bg-primary text-on-primary font-bold text-xs sm:text-sm shadow-md hover:bg-primary-container active:scale-95 transition-all text-center leading-tight">
+            Save Student to Roster
+          </button>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- DYNAMIC FLOATING TOAST (React Native Pill with Framer Motion spring) -->
+    <div
+      class="fixed top-20 left-1/2 -translate-x-1/2 max-w-[90%] z-50 px-4 py-2.5 rounded-full bg-slate-900/90 dark:bg-slate-800/90 backdrop-blur-md text-white border border-sky-400/30 shadow-2xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-2"
+      id="toast">
+      <span class="material-symbols-outlined text-[19px] text-emerald-400 shrink-0" id="toast-icon">task_alt</span>
+      <span class="font-label-md font-semibold text-xs sm:text-sm" id="toast-message">Action completed
+        successfully</span>
+    </div>
+
+  </div>
+
+  <!-- Application Logic & Scripts -->
+  <script src="/static/js/api.js?v=20261110f"></script>
+  <script src="/static/js/i18n.js?v=20261110f"></script>
+  <script src="/static/js/transliterate.js?v=20261110f"></script>
+  <script src="/static/js/firebase-init.js?v=20261110f"></script>
+  <script src="/static/js/app.js?v=20261110i"></script>
+  <script>
+    async function openPhoneAccessModal() {
+      const modal = document.getElementById("modal-phone-access");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+
+      let mobileUrl = `http://${window.location.hostname}:8000/`;
+      try {
+        const res = await fetch("/api/network-info");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.mobile_url) {
+            mobileUrl = data.mobile_url;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not retrieve /api/network-info:", err);
+      }
+
+      if (mobileUrl.includes("localhost") || mobileUrl.includes("127.0.0.1")) {
+        mobileUrl = "http://10.146.7.153:8000/";
+      }
+
+      const urlInput = document.getElementById("phone-mobile-url-input");
+      if (urlInput) urlInput.value = mobileUrl;
+
+      const qrImg = document.getElementById("phone-qr-img");
+      if (qrImg) {
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(mobileUrl)}`;
+      }
+    }
+
+    function closePhoneAccessModal() {
+      const modal = document.getElementById("modal-phone-access");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function copyMobileUrl() {
+      const urlInput = document.getElementById("phone-mobile-url-input");
+      const btn = document.getElementById("btn-copy-mobile-url");
+      if (urlInput) {
+        navigator.clipboard.writeText(urlInput.value).then(() => {
+          if (btn) {
+            btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">done</span><span>Copied!</span>`;
+            setTimeout(() => {
+              btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">content_copy</span><span>Copy</span>`;
+            }, 2000);
+          }
+          if (window.app && typeof window.app.showToast === "function") {
+            window.app.showToast("Mobile link copied to clipboard!", "success");
+          }
+        }).catch(() => {
+          urlInput.select();
+          document.execCommand("copy");
+        });
+      }
+    }
+
+    // Expose globally
+    window.openPhoneAccessModal = openPhoneAccessModal;
+    window.closePhoneAccessModal = closePhoneAccessModal;
+    window.copyMobileUrl = copyMobileUrl;
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function (names) {
+        for (let name of names) caches.delete(name);
+      });
+    }
+  </script>
+</body>
+
+</html>
