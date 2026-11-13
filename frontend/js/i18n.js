@@ -146,6 +146,13 @@ const translations = {
     gps_locked: "GPS Locked",
     accuracy_meters: "Accuracy",
     cook_duty_title: "Cook-cum-Helper Duty Log",
+    on_duty: "On Duty",
+    on_leave: "On Leave",
+    cook_head_title: "Head Cook",
+    cook_assistant_title: "Assistant Cook",
+    cook_shift_1: "Morning Shift • Meal Preparation",
+    cook_shift_2: "Sanitation & Serving",
+    cook_present_count: "Present",
 
     // Inventory & Produce
     inv_title: "Inventory & Fresh Produce Ledger",
@@ -361,6 +368,13 @@ const translations = {
     gps_locked: "ಜಿಪಿಎಸ್ ಲಾಕ್ ಆಗಿದೆ",
     accuracy_meters: "ನಿಖರತೆ",
     cook_duty_title: "ಅಡುಗೆ ಸಹಾಯಕ ಸಿಬ್ಬಂದಿ ಕರ್ತವ್ಯ ವಿವರ",
+    on_duty: "ಹಾಜರಿದ್ದಾರೆ",
+    on_leave: "ರಜೆಯಲ್ಲಿದ್ದಾರೆ",
+    cook_head_title: "ಮುಖ್ಯ ಅಡುಗೆಯವರು",
+    cook_assistant_title: "ಸಹಾಯಕ ಅಡುಗೆಯವರು",
+    cook_shift_1: "ಬೆಳಗಿನ ಪಾಳಿ • ಅಡುಗೆ ತಯಾರಿ",
+    cook_shift_2: "ಸ್ವಚ್ಛತೆ ಮತ್ತು ಊಟ ಬಡಿಸುವಿಕೆ",
+    cook_present_count: "ಹಾಜರಿ",
 
     // Inventory & Produce
     inv_title: "ದಾಸ್ತಾನು ಮತ್ತು ತಾಜಾ ತರಕಾರಿಗಳ ಲೆಕ್ಕಪುಸ್ತಕ",

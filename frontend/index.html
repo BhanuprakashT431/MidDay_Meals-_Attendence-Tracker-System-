@@ -1615,49 +1615,59 @@
         <!-- Cook Cum Helper Attendance -->
         <div
           class="flex flex-col gap-space-sm rounded-xl bg-surface-container-lowest p-space-md shadow-sm border border-surface-container">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center gap-space-xs">
               <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
-              <h2 class="font-title-md text-title-md text-on-surface" data-i18n="cook_duty_title">Cook-cum-Helper Duty
-                Log</h2>
+              <h2 class="font-title-md text-title-md text-on-surface" data-i18n="cook_duty_title">Cook-cum-Helper Duty Log</h2>
             </div>
-            <span class="font-label-sm text-label-sm text-secondary font-bold">2/2 Present</span>
+            <span id="cook-duty-summary" class="px-2.5 py-1 rounded-full text-[12px] font-bold bg-secondary-container text-on-secondary-container transition-colors">
+              2/2 Present
+            </span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
-            <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
-              <div class="flex items-center gap-space-sm">
-                <div
-                  class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center font-bold">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Head Cook K1 -->
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-surface-container/60 hover:border-primary/20 transition-all shadow-2xs gap-3">
+              <div class="flex items-center gap-3 min-w-0 flex-1">
+                <div class="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0 text-[13px] border border-primary/20">
                   K1
                 </div>
-                <div class="flex flex-col">
-                  <span class="font-label-lg text-label-lg text-on-surface font-bold">Head Cook</span>
-                  <span class="font-body-sm text-body-sm text-on-surface-variant">Morning Shift • Meal
-                    Preparation</span>
+                <div class="flex flex-col min-w-0">
+                  <span class="font-label-lg text-on-surface font-bold text-[14px] truncate" data-i18n="cook_head_title">Head Cook</span>
+                  <span class="text-[12px] text-on-surface-variant truncate" data-i18n="cook_shift_1">Morning Shift • Meal Preparation</span>
                 </div>
               </div>
-              <span
-                class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">check</span>On Duty
-              </span>
+              <button
+                type="button"
+                id="cook-duty-btn-k1"
+                onclick="toggleCookDuty('k1')"
+                aria-label="Toggle Head Cook Duty"
+                class="shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full font-label-sm text-[12px] font-bold flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 dark:hover:bg-emerald-900">
+                <span id="cook-duty-icon-k1" class="material-symbols-outlined text-[15px] text-emerald-700 dark:text-emerald-300">check_circle</span>
+                <span id="cook-duty-text-k1" data-i18n="on_duty">On Duty</span>
+              </button>
             </div>
 
-            <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
-              <div class="flex items-center gap-space-sm">
-                <div
-                  class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center font-bold">
+            <!-- Assistant Cook K2 -->
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-surface-container/60 hover:border-primary/20 transition-all shadow-2xs gap-3">
+              <div class="flex items-center gap-3 min-w-0 flex-1">
+                <div class="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0 text-[13px] border border-primary/20">
                   K2
                 </div>
-                <div class="flex flex-col">
-                  <span class="font-label-lg text-label-lg text-on-surface font-bold">Assistant Cook</span>
-                  <span class="font-body-sm text-body-sm text-on-surface-variant">Sanitation & Serving</span>
+                <div class="flex flex-col min-w-0">
+                  <span class="font-label-lg text-on-surface font-bold text-[14px] truncate" data-i18n="cook_assistant_title">Assistant Cook</span>
+                  <span class="text-[12px] text-on-surface-variant truncate" data-i18n="cook_shift_2">Sanitation & Serving</span>
                 </div>
               </div>
-              <span
-                class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">check</span>On Duty
-              </span>
+              <button
+                type="button"
+                id="cook-duty-btn-k2"
+                onclick="toggleCookDuty('k2')"
+                aria-label="Toggle Assistant Cook Duty"
+                class="shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full font-label-sm text-[12px] font-bold flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 dark:hover:bg-emerald-900">
+                <span id="cook-duty-icon-k2" class="material-symbols-outlined text-[15px] text-emerald-700 dark:text-emerald-300">check_circle</span>
+                <span id="cook-duty-text-k2" data-i18n="on_duty">On Duty</span>
+              </button>
             </div>
           </div>
         </div>

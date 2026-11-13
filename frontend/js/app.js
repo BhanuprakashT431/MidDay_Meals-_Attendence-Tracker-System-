@@ -23,6 +23,7 @@ class AppController {
     this.currentPlatePhoto = null;
     this.currentGps = null;
     this.gpsCalibrating = false;
+    this.cookDuty = { k1: "present", k2: "present" };
   }
 
   async init() {
@@ -30,6 +31,7 @@ class AppController {
     this.setupNetworkMonitor();
     this.bindGlobalEvents();
     this.calibrateGps(false);
+    this.initCookDuty();
 
     if (window.i18n) {
       window.i18n.updateDOMTranslations();
@@ -906,6 +908,107 @@ updateAttendanceStats() {
   }
 
   // -------------------------------------------------------------
+  // COOK-CUM-HELPER DUTY LOG
+  // -------------------------------------------------------------
+  initCookDuty() {
+    const saved = localStorage.getItem(`cook_duty_${this.selectedDate}`);
+    if (saved) {
+      try {
+        this.cookDuty = JSON.parse(saved);
+      } catch (e) {
+        this.cookDuty = { k1: "present", k2: "present" };
+      }
+    } else {
+      this.cookDuty = { k1: "present", k2: "present" };
+    }
+    this.renderCookDutyUI();
+  }
+
+  toggleCookDuty(cookId) {
+    if (!this.cookDuty) {
+      this.cookDuty = { k1: "present", k2: "present" };
+    }
+    const current = this.cookDuty[cookId] || "present";
+    const nextStatus = current === "present" ? "absent" : "present";
+    this.cookDuty[cookId] = nextStatus;
+
+    try {
+      localStorage.setItem(`cook_duty_${this.selectedDate}`, JSON.stringify(this.cookDuty));
+    } catch (e) {
+      console.warn("Could not save cook duty:", e);
+    }
+
+    this.renderCookDutyUI();
+
+    const isKn = window.i18n?.currentLang === "kn";
+    const cookLabel = cookId === "k1" 
+      ? (isKn ? "ಮುಖ್ಯ ಅಡುಗೆಯವರು" : "Head Cook")
+      : (isKn ? "ಸಹಾಯಕ ಅಡುಗೆಯವರು" : "Assistant Cook");
+    
+    const statusMsg = nextStatus === "present"
+      ? (isKn ? `${cookLabel}: ಹಾಜರಿದ್ದಾರೆ (On Duty)` : `${cookLabel}: Marked On Duty (Present)`)
+      : (isKn ? `${cookLabel}: ರಜೆಯಲ್ಲಿದ್ದಾರೆ (On Leave)` : `${cookLabel}: Marked On Leave (Absent)`);
+    
+    this.showToast(statusMsg, nextStatus === "present" ? "success" : "info");
+  }
+
+  renderCookDutyUI() {
+    if (!this.cookDuty) {
+      this.cookDuty = { k1: "present", k2: "present" };
+    }
+    const isKn = window.i18n?.currentLang === "kn";
+    const cooks = [
+      { id: "k1", btnId: "cook-duty-btn-k1", iconId: "cook-duty-icon-k1", textId: "cook-duty-text-k1" },
+      { id: "k2", btnId: "cook-duty-btn-k2", iconId: "cook-duty-icon-k2", textId: "cook-duty-text-k2" }
+    ];
+
+    let presentCount = 0;
+    cooks.forEach(c => {
+      const isPresent = (this.cookDuty[c.id] || "present") === "present";
+      if (isPresent) presentCount++;
+
+      const btn = document.getElementById(c.btnId);
+      const icon = document.getElementById(c.iconId);
+      const text = document.getElementById(c.textId);
+
+      if (btn) {
+        if (isPresent) {
+          btn.className = "shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full font-label-sm text-[12px] font-bold flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 dark:hover:bg-emerald-900";
+          if (icon) {
+            icon.textContent = "check_circle";
+            icon.className = "material-symbols-outlined text-[15px] text-emerald-700 dark:text-emerald-300";
+          }
+          if (text) {
+            text.textContent = isKn ? "ಹಾಜರಿದ್ದಾರೆ" : "On Duty";
+          }
+        } else {
+          btn.className = "shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full font-label-sm text-[12px] font-bold flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-300 dark:border-rose-700 hover:bg-rose-100 dark:hover:bg-rose-900";
+          if (icon) {
+            icon.textContent = "cancel";
+            icon.className = "material-symbols-outlined text-[15px] text-rose-600 dark:text-rose-300";
+          }
+          if (text) {
+            text.textContent = isKn ? "ರಜೆಯಲ್ಲಿದ್ದಾರೆ" : "On Leave";
+          }
+        }
+      }
+    });
+
+    const summaryEl = document.getElementById("cook-duty-summary");
+    if (summaryEl) {
+      const suffix = isKn ? "ಹಾಜರಿ" : "Present";
+      summaryEl.textContent = `${presentCount}/2 ${suffix}`;
+      if (presentCount === 2) {
+        summaryEl.className = "px-2.5 py-1 rounded-full text-[12px] font-bold bg-secondary-container text-on-secondary-container";
+      } else if (presentCount === 1) {
+        summaryEl.className = "px-2.5 py-1 rounded-full text-[12px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
+      } else {
+        summaryEl.className = "px-2.5 py-1 rounded-full text-[12px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+      }
+    }
+  }
+
+  // -------------------------------------------------------------
   // MEAL & RATION SCREEN
   // -------------------------------------------------------------
   async loadMealScreen() {
@@ -944,8 +1047,9 @@ updateAttendanceStats() {
     if (normV) normV.textContent = `${veg} kg`;
     if (normF) normF.textContent = `${presentCount} pcs`;
 
-    // Initialize GPS calibration in background
+    // Initialize GPS calibration & Cook Duty in background
     this.calibrateGps(false);
+    this.initCookDuty();
 
     // Check if meal already logged today with a photo
     try {
@@ -1003,7 +1107,7 @@ updateAttendanceStats() {
       menu_type: "Rice, Sambar with Vegetables & Egg / Fruit",
       menu_type_kn: "ಅನ್ನ, ತರಕಾರಿ ಸಾಂಬಾರ್ ಮತ್ತು ಮೊಟ್ಟೆ / ಹಣ್ಣು",
       tasting_score: 5,
-      tasting_notes: "Taste, temperature and kitchen hygiene inspected prior to serving.",
+      tasting_notes: `Taste, temperature and kitchen hygiene inspected prior to serving. [Cooks on Duty: ${Object.values(this.cookDuty || {}).filter(s => s === 'present').length}/2]`,
       tasted_by: this.user ? this.user.full_name : "Designated Staff / HM",
       photo_data: this.currentPlatePhoto?.dataUrl || null,
       photo_lat: this.currentPlatePhoto?.lat || (this.currentGps?.lat || null),
@@ -1100,6 +1204,7 @@ updateLangDisplay() {
   const lang = window.i18n ? window.i18n.currentLang : "kn";
   const el = document.getElementById("current-lang-text");
   if (el) el.textContent = lang === "kn" ? "EN" : "ಕನ್ನಡ";
+  this.renderCookDutyUI();
 }
 
 bindGlobalEvents() {
@@ -1607,6 +1712,10 @@ function retakePlatePhoto() {
   window.app?.triggerPlateCamera();
 }
 
+function toggleCookDuty(cookId) {
+  window.app?.toggleCookDuty(cookId);
+}
+
 function submitMealLedger() {
   window.app.submitMeal();
 }
@@ -1962,6 +2071,7 @@ window.adjustInputVal = adjustInputVal;
 window.triggerPlateCamera = triggerPlateCamera;
 window.handlePlatePhotoCapture = handlePlatePhotoCapture;
 window.retakePlatePhoto = retakePlatePhoto;
+window.toggleCookDuty = toggleCookDuty;
 window.submitMealLedger = submitMealLedger;
 window.openProduceModal = openProduceModal;
 window.closeProduceModal = closeProduceModal;
