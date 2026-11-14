@@ -11,3 +11,4 @@ services:
         value: 3.11.9
       - key: JWT_SECRET_KEY
         generateValue: true
+
