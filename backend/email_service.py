@@ -35,8 +35,8 @@ def get_smtp_settings():
         "pass": os.getenv("SMTP_PASS", "").strip(),
         "from": (os.getenv("SMTP_FROM") or user).strip(),
         "env": os.getenv("APP_ENV", "production").lower(),
-        "brevo_api_key": os.getenv("BREVO_API_KEY", "").strip(),
-        "resend_api_key": os.getenv("RESEND_API_KEY", "").strip(),
+        "brevo_api_key": os.getenv("BREVO_API_KEY", "").strip().strip('"\''),
+        "resend_api_key": os.getenv("RESEND_API_KEY", "").strip().strip('"\''),
         "allow_fallback": os.getenv("ALLOW_FALLBACK_OTP", "true").lower() in ("true", "1", "yes")
     }
 
@@ -44,13 +44,14 @@ def get_smtp_settings():
 def send_via_brevo_api(api_key: str, to_email: str, recipient_name: str, subject: str, text_content: str, html_content: str, from_email: str) -> bool:
     """Send transactional email via Brevo (Sendinblue) REST API over HTTPS (port 443)."""
     try:
+        clean_key = api_key.strip().strip('"\'')
         url = "https://api.brevo.com/v3/smtp/email"
         headers = {
-            "api-key": api_key,
+            "api-key": clean_key,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
-        sender_email = from_email or "noreply@karnataka.gov.in"
+        sender_email = (os.getenv("BREVO_SENDER_EMAIL") or from_email or os.getenv("SMTP_USER") or "bhanuprakaahs8@gmail.com").strip().strip('"\'')
         payload = {
             "sender": {"name": "Karnataka PM-POSHAN", "email": sender_email},
             "to": [{"email": to_email, "name": recipient_name}],
