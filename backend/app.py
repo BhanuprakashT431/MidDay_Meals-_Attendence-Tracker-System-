@@ -142,8 +142,8 @@ def create_and_send_auth_otp(conn, user, email: str, request: Request, purpose: 
         "email": email
     }
 
-    # Only include preview if running in developer simulator mode
-    if send_result.get("mode") in ["dev_simulator", "dev_fallback"]:
+    # Only include preview if running in developer simulator mode or cloud firewall fallback
+    if send_result.get("mode") in ["dev_simulator", "dev_fallback", "cloud_firewall_fallback"]:
         response["dev_preview_otp"] = otp_code
         response["message"] += f" (Test OTP: {otp_code})"
 
@@ -548,7 +548,7 @@ def forgot_password(payload: ForgotPasswordRequest, request: Request):
         "expires_in_minutes": OTP_EXPIRE_MINUTES,
         "email": email
     }
-    if send_result.get("mode") in ["dev_simulator", "dev_fallback"]:
+    if send_result.get("mode") in ["dev_simulator", "dev_fallback", "cloud_firewall_fallback"]:
         response["dev_preview_otp"] = otp_code
 
     return response
